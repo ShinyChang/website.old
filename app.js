@@ -5,7 +5,7 @@
 var ArticleProvider = require('./modal/articleProvider').ArticleProvider;
 var articleProvider = new ArticleProvider('localhost', 27017);
 
-var UploadProvider = require('./modal/UploadProvider').UploadProvider;
+var UploadProvider = require('./modal/uploadProvider').UploadProvider;
 var UploadProvider = new UploadProvider('localhost', 27017);
 
 var express = require('express');
