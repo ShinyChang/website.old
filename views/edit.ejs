@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  	<meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta http-equiv="content-language" content="zh-tw">
+  	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Shiny">
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/bootstrap.min.css' />
+    <link rel='stylesheet' href='/stylesheets/font-awesome.min.css' />
+    <link rel='stylesheet' href='/stylesheets/tagmanager.css' />
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <style>
+        pre.prettyprint {
+            position: relative;
+            min-height: 40px;
+        }
+
+        pre.prettyprint::before {
+            position: absolute;
+            content: "code";
+            right: 0;
+            top: 0;
+            background: #ddd;
+            padding: 5px 10px;
+            border-radius: 3px;
+            color: #777;
+        }
+    </style>
+  </head>
+  <body>
+  	<% include common/nav.ejs %>
+    <div class='container'>
+        <form method="post">
+            <div class='row'>
+                <div class="input-group">
+                  <span class="input-group-addon">標題</span>
+                  <input name='title' type="text" class="form-control" value="<%= article.title%>" autofocus>
+                </div>
+                <textarea  name='context' id='context' ><%- article.context %></textarea>
+                <input type="text" name="tags" placeholder="Tags" class="tm-input form-control"/>
+                <input id="fileupload" type="file" name="files[]" data-url="/upload" multiple>
+            </div>
+            <div class='row'>
+              <ul class='fileBox'>
+                <% for(var o in files) {%>
+                  <li><img src='<%= files[o].url %>'></li>
+                <% } %>
+              </ul>
+            </div>
+            <div class='row text-right'>
+                <input class='btn btn-primary' type='submit' value='儲存'/>
+            </div>
+        </form>
+    </div>
+    <% include common/footer.ejs %>
+    <script src="/javascripts/jquery.hotkeys.js"></script>
+    <script src="/ckeditor/ckeditor.js"></script>
+    <script src="/javascripts/jquery.ui.widget.js"></script>
+    <script src="/javascripts/jquery.fileupload.js"></script>
+    <script src="/javascripts/tagmanager.js"></script>
+    <script type="text/javascript">
+      (function(window, $) {
+            $('#fileupload').fileupload({
+              dataType: 'json',
+              dropZone: $("body")
+            });
+            $(".tm-input").tagsManager({prefilled: "<%= article.tag || "" %>"});
+
+            $('.dropdown-toggle').dropdown();
+            CKEDITOR.replace( 'context' );
+      })(window, jQuery);
+    </script>
+  </body>
+</html>

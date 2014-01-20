@@ -1,0 +1,9 @@
+<ul class='tag-box clearfix'>
+<%
+    var tagString = article.tag || "";
+    var tags = tagString.toString().split(",");
+    for(var o in tags) {
+%>
+    <li><%= tags[o] %></li>
+    <% } %>
+</ul>
