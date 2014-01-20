@@ -10,6 +10,7 @@
     "ejs": "*",
     "mongodb": "*",
     "stylus": "*",
-    "imagemagick": "0.1.x"
+    "imagemagick": "0.1.x",
+    "jquery-file-upload-middleware": "*"
   }
 }
