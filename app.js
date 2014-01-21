@@ -77,7 +77,6 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 app.use(express.favicon());
 app.use(express.logger('dev'));
-app.use(express.compress());
 app.use(express.json());
 app.use(express.urlencoded());
 app.use(express.methodOverride());
@@ -91,6 +90,14 @@ app.use(express.static(path.join(__dirname, 'public')));
 if ('development' == app.get('env')) {
     app.use(express.errorHandler());
 }
+
+// global controller
+app.get('/*',function(req,res,next){
+    res.header('X-XSS-Protection' , 0 ); // disable X-XSS-Protection
+    next();
+});
+
+
 
 // app.get('/', routes.index);
 app.get('/',  function(req, res){
