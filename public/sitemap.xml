@@ -19,6 +19,14 @@
   <changefreq>hourly</changefreq>
 </url>
 <url>
+  <loc>http://shinychang.net/article/52dd361836fae1590724d9c1</loc>
+  <changefreq>hourly</changefreq>
+</url>
+<url>
+  <loc>http://shinychang.net/article/52dcbb55a9a723680ec3e82a</loc>
+  <changefreq>hourly</changefreq>
+</url>
+<url>
   <loc>http://shinychang.net/article/52d75d9707763f5018703c61</loc>
   <changefreq>hourly</changefreq>
 </url>
@@ -51,15 +59,15 @@
   <changefreq>hourly</changefreq>
 </url>
 <url>
+  <loc>http://shinychang.net/article/list?page=2</loc>
+  <changefreq>hourly</changefreq>
+</url>
+<url>
   <loc>http://shinychang.net/article/52ce66e304d725e41fa1b668</loc>
   <changefreq>hourly</changefreq>
 </url>
 <url>
   <loc>http://shinychang.net/article/52ce663a04d725e41fa1b667</loc>
-  <changefreq>hourly</changefreq>
-</url>
-<url>
-  <loc>http://shinychang.net/article/list?page=2</loc>
   <changefreq>hourly</changefreq>
 </url>
 <url>
@@ -95,11 +103,15 @@
   <changefreq>hourly</changefreq>
 </url>
 <url>
-  <loc>http://shinychang.net/article/52be4912be235254212df744</loc>
+  <loc>http://shinychang.net/article/list?page=1</loc>
   <changefreq>hourly</changefreq>
 </url>
 <url>
-  <loc>http://shinychang.net/article/list?page=1</loc>
+  <loc>http://shinychang.net/article/list?page=3</loc>
+  <changefreq>hourly</changefreq>
+</url>
+<url>
+  <loc>http://shinychang.net/article/52be4912be235254212df744</loc>
   <changefreq>hourly</changefreq>
 </url>
 </urlset>
