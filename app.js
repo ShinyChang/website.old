@@ -6,7 +6,7 @@ var ArticleProvider = require('./modal/articleProvider').ArticleProvider;
 var articleProvider = new ArticleProvider('localhost', 27017);
 
 var UploadProvider = require('./modal/uploadProvider').UploadProvider;
-var UploadProvider = new UploadProvider('localhost', 27017);
+var uploadProvider = new UploadProvider('localhost', 27017);
 
 var express = require('express');
 var upload = require('jquery-file-upload-middleware');
@@ -24,34 +24,37 @@ upload.configure({
 });
 
 // {name, originalName, size, type, deleteType, url, deleteUrl}
-upload.on('end', function(info){
-    UploadProvider.save(info, function( error, record) {
+upload.on('end', function(info) {
+    uploadProvider.save(info, function(error, record) {
         console.log(record);
     });
 });
-upload.on('error', function (e) {
+upload.on('error', function(e) {
     console.log(e.message);
 });
 
 
 
-
+// require routers
 var routes = require('./routes');
 var user = require('./routes/user');
+var index = require('./routes/index');
+var article = require('./routes/article');
+
 var http = require('http');
 var path = require('path');
 
 var app = express();
 app.disable('x-powered-by'); // remove header x-powered-by information
-app.configure(function () {
+app.configure(function() {
     app.use('/upload', upload.fileHandler());
     app.use(express.bodyParser());
 });
 app.locals({
     timeDiff: function(dateString) {
-        var day  = 60 * 60 * 24,
+        var day = 60 * 60 * 24,
             hour = 60 * 60,
-            min  = 60;
+            min = 60;
 
         var diff = Math.round((new Date() - new Date(dateString)) / 1000);
         if (diff >= day) {
@@ -92,113 +95,38 @@ if ('development' == app.get('env')) {
 }
 
 // global controller
-app.get('/*',function(req,res,next){
-    res.header('X-XSS-Protection' , 0 ); // disable X-XSS-Protection
+app.get('/*', function(req, res, next) {
+    res.header('X-XSS-Protection', 0); // disable X-XSS-Protection
+    req.articleProvider = articleProvider;
+    req.uploadProvider = uploadProvider;
     next();
 });
 
 // sitemap
-app.get('/sitemap.xml', function(req, res){
-    articleProvider.findAll(function(error, article) {
-        res.header('Content-Type', 'application/xml');
-        res.render('sitemap', {
-            articles: article,
-            page: Math.floor(article.length / 10)
-        });
-    });
-});
-
+app.get('/sitemap.xml', index.sitemap);
 
 
 // index not implement, redirect to article list
-app.get('/',  function(req, res){
+app.get('/', function(req, res) {
     res.redirect('/article/list/');
 });
 
 app.get('/about', user.about);
 
+// upload
 app.get('/upload', function(req, res) {
     res.redirect('/article/list');
 });
 
-app.get('/article/new', function(req, res){
-    articleProvider.save({
-        title: 'untitled',
-        context: ''
-    }, function( error, docs) {
-        res.redirect('/article/edit/' + docs._id);
-    });
-});
+// article
+app.get('/article/new', article.new);
+app.get('/article/edit/:id', article.edit);
+app.post('/article/edit/:id', article.postEdit);
+app.get('/article/list', article.list);
+app.get('/article/:id', article.show);
 
-app.get('/article/edit/:id', function(req, res) {
-    UploadProvider.findAll(function(error, files) {
-        articleProvider.findById(req.params.id, function(error, article) {
-            res.render('edit', {
-                title: article.title,
-                path: '/article',
-                article: article,
-                files: files
-            });
-        });
-    });
-});
 
-app.post('/article/edit/:id', function(req, res){
-    articleProvider.save({
-        id: req.params.id,
-        title: req.body.title,
-        context: req.body.context,
-        tag: req.body['hidden-tags'].toLowerCase().split(",")
-    }, function( error, docs) {
-        res.redirect('/article/' + docs.id);
-    });
-});
 
-app.get('/article/list', function(req, res){
-    articleProvider.count(function(count){
-        articleProvider.findPage(req.query.page, function(error, article) {
-            var totalPage = Math.ceil(count / 10),
-                currPage = req.query.page ? parseInt(req.query.page, 10) : 1;
-
-            var next = 0,
-                prev = 0;
-            if (totalPage > currPage) {
-                next = currPage + 1;
-                if (currPage > 1) {
-                    prev = currPage - 1;
-                }
-            } else if(totalPage === currPage) {
-                if (currPage > 1) {
-                    prev = currPage - 1;
-                }
-            }
-
-            var desc = "";
-            for(var o in article) {
-                desc += article[o].title + " ";
-            }
-            res.render('article_list', {
-                title: "文章列表",
-                description: desc,
-                path: '/article',
-                articles: article,
-                next:next,
-                prev:prev
-            });
-        });
-    });
-});
-
-app.get('/article/:id', function(req, res) {
-    articleProvider.findById(req.params.id, function(error, article) {
-        res.render('article', {
-            title: article.title,
-            description: article.context.replace(/(<([^>]+)>)/ig,""),
-            path: '/article',
-            article: article
-        });
-    });
-});
 
 // server error
 app.use(function(err, req, res, next) {
