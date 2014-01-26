@@ -2,10 +2,10 @@
  * Module dependencies.
  */
 
-var ArticleProvider = require('./modal/articleProvider').ArticleProvider;
+var ArticleProvider = require('./modals/articleProvider').ArticleProvider;
 var articleProvider = new ArticleProvider('localhost', 27017);
 
-var UploadProvider = require('./modal/uploadProvider').UploadProvider;
+var UploadProvider = require('./modals/uploadProvider').UploadProvider;
 var uploadProvider = new UploadProvider('localhost', 27017);
 
 var express = require('express');
