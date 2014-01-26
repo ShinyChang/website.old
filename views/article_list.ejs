@@ -19,9 +19,9 @@
             <article>
                 <header class='clearfix'>
                   <h2><a href='/article/<%= article._id %>'><%= article.title%></a></h2>
-                  <div class='create-date'><%= dateString(article.createTime) %></div>
+                  <div class='create-date'><%= lib.dateString(article.createTime) %></div>
                   <div class='desc'>
-                  作者：<a href="https://plus.google.com/+ZhiHongChang/?rel=author">ShinyChang</a>，最後更新：<%= timeDiff(article.lastUpdate) %>
+                  <%= lang.author %>：<a href="https://plus.google.com/+ZhiHongChang/?rel=author"><%= lang.ShinyChang %></a>，<%= lang.lastUpdate %>：<%= lib.timeDiff(article.lastUpdate) %>
                   </div>
                   <% include common/tag.ejs %>
                 </header>
@@ -32,10 +32,10 @@
          <% } %>
         <ul class="pager">
           <% if (prev > 0) { %>
-          <li class="previous"><a href="/article/list?page=<%= prev %>">&larr; 較新的文章</a></li>
+          <li class="previous"><a href="/article/list?page=<%= prev %>">&larr; <%= lang.newerArticle %></a></li>
           <% } %>
           <% if (next > 0) { %>
-          <li class="next"><a href="/article/list?page=<%= next %>">較舊的文章 &rarr;</a></li>
+          <li class="next"><a href="/article/list?page=<%= next %>"><%= lang.olderArticle %> &rarr;</a></li>
           <% } %>
         </ul>
     </div>
