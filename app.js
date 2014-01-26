@@ -97,14 +97,26 @@ app.get('/*',function(req,res,next){
     next();
 });
 
-
-
-// app.get('/', routes.index);
-app.get('/',  function(req, res){
-res.redirect('/article/list/');
+// sitemap
+app.get('/sitemap.xml', function(req, res){
+    articleProvider.findAll(function(error, article) {
+        res.header('Content-Type', 'application/xml');
+        res.render('sitemap', {
+            articles: article,
+            page: Math.floor(article.length / 10)
+        });
+    });
 });
+
+
+
+// index not implement, redirect to article list
+app.get('/',  function(req, res){
+    res.redirect('/article/list/');
+});
+
 app.get('/about', user.about);
-app.get('/users', user.list);
+
 app.get('/upload', function(req, res) {
     res.redirect('/article/list');
 });
@@ -144,7 +156,7 @@ app.post('/article/edit/:id', function(req, res){
 
 app.get('/article/list', function(req, res){
     articleProvider.count(function(count){
-        articleProvider.findAll(req.query.page, function(error, article) {
+        articleProvider.findPage(req.query.page, function(error, article) {
             var totalPage = Math.ceil(count / 10),
                 currPage = req.query.page ? parseInt(req.query.page, 10) : 1;
 

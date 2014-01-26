@@ -19,12 +19,26 @@ ArticleProvider.prototype.getCollection = function(callback) {
     });
 };
 
-ArticleProvider.prototype.findAll = function(page, callback) {
+ArticleProvider.prototype.findPage = function(page, callback) {
     page = page || 1;
     this.getCollection(function(error, article_collection) {
         if (error) callback(error)
         else {
             article_collection.find().skip((page - 1) * 10).limit(10).sort({
+                _id: -1
+            }).toArray(function(error, results) {
+                if (error) callback(error)
+                else callback(null, results)
+            });
+        }
+    });
+};
+
+ArticleProvider.prototype.findAll = function(callback) {
+    this.getCollection(function(error, article_collection) {
+        if (error) callback(error)
+        else {
+            article_collection.find().sort({
                 _id: -1
             }).toArray(function(error, results) {
                 if (error) callback(error)
