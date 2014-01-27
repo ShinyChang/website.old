@@ -16,7 +16,7 @@ exports.sitemap = function(req, res) {
         res.header('Content-Type', 'application/xml');
         res.render('sitemap', {
             articles: article,
-            page: Math.floor(article.length / 10)
+            page: Math.ceil(article.length / 10)
         });
     });
 }
