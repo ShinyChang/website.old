@@ -81,7 +81,7 @@ if ('development' == app.get('env')) {
 }
 
 // global controller
-app.get('/*', function(req, res, next) {
+app.all('/*', function(req, res, next) {
     res.header('X-XSS-Protection', 0); // disable X-XSS-Protection
     req.articleProvider = articleProvider;
     req.uploadProvider = uploadProvider;
