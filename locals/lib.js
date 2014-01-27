@@ -4,13 +4,13 @@ exports.lib = {
             hour = 60 * 60,
             min = 60;
 
-        var diff = Math.ceil((new Date() - new Date(dateString)) / 1000);
+        var diff = Math.floor((new Date() - new Date(dateString)) / 1000);
         if (diff >= day) {
-            return Math.ceil(diff / day) + " 天前";
+            return Math.floor(diff / day) + " 天前";
         } else if (diff >= hour) {
-            return Math.ceil(diff / hour) + " 小時前";
+            return Math.floor(diff / hour) + " 小時前";
         } else if (diff >= min) {
-            return Math.ceil(diff / min) + " 分鐘前";
+            return Math.floor(diff / min) + " 分鐘前";
         } else {
             return "剛剛";
         }
