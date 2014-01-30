@@ -85,3 +85,30 @@ exports.show = function(req, res) {
         });
     });
 };
+
+exports.archive = function(req, res) {
+    articleProvider = req.articleProvider;
+    articleProvider.findAll(1, function(error, article) {
+        var desc = "",
+            list = {};
+        for (var o in article) {
+            desc += article[o].title + " ";
+        }
+
+        article.forEach(function(item){
+            var year = item.createTime.getFullYear(),
+                month = item.createTime.getMonth() + 1;
+
+            list[year] = list[year] || {};
+            list[year][month] = list[year][month] || [];
+            list[year][month].push(item);
+        });
+
+        res.render('archive', {
+            title: "文章列表",
+            description: desc,
+            path: '/article/archive',
+            list: list
+        });
+    });
+};

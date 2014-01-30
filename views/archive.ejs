@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  	   <meta http-equiv="content-type" content="text/html; charset=utf-8">
+       <meta http-equiv="content-language" content="zh-tw">
+       <meta name="viewport" content="width=device-width, initial-scale=1.0">
+       <meta name="author" content="Shiny">
+       <title><%= title %></title>
+       <meta name='description' content="<%= description %>"></meta>
+       <link rel='stylesheet' href='/stylesheets/bootstrap.min.css' />
+       <link rel='stylesheet' href='/stylesheets/font-awesome.min.css' />
+       <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body>
+    <% include common/nav.ejs %>
+    <div class='archive container'>
+    <% var start = 1; %>
+    <% for(var year in list) {%>
+      <div class='year-box clearfix'>
+        <div class='year'><%= year %></div>
+        <div class='month-box clearfix'>
+          <% for(var month in list[year]) { %>
+            <div class='month'><%= month %></div>
+            <ol class='article-box' start='<%= start %>'>
+            <% start += list[year][month].length %>
+            <% for(var idx in list[year][month]) { var article = list[year][month][idx]; %>
+              <li class='article-item'>
+                <div class='title'>
+                  <a href='/article/<%= article.id %>'><%= article.title %></a>
+                </div>
+                <ul class='tag-box clearfix'>
+                <% for(tagIndex in article.tag) { var tag = article.tag[tagIndex]; %>
+                  <li><%= tag %></li>
+                <% } %>
+                </ul>
+              </li>
+            <% } %>
+            </ol>
+          <% } %>
+        </div>
+      </div>
+    <% } %>
+    </div>
+    <% include common/footer.ejs %>
+  </body>
+</html>

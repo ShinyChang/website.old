@@ -34,12 +34,12 @@ ArticleProvider.prototype.findPage = function(page, callback) {
     });
 };
 
-ArticleProvider.prototype.findAll = function(callback) {
+ArticleProvider.prototype.findAll = function(sort, callback) {
     this.getCollection(function(error, article_collection) {
         if (error) callback(error)
         else {
             article_collection.find().sort({
-                _id: -1
+                _id: sort
             }).toArray(function(error, results) {
                 if (error) callback(error)
                 else callback(null, results)
