@@ -71,6 +71,7 @@ app.use(express.urlencoded());
 app.use(express.methodOverride());
 app.use(express.cookieParser('your secret here'));
 app.use(express.session());
+app.use(express.csrf());
 app.use(app.router);
 app.use(require('stylus').middleware(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'public')));
@@ -83,6 +84,7 @@ if ('development' == app.get('env')) {
 // global controller
 app.all('/*', function(req, res, next) {
     res.header('X-XSS-Protection', 0); // disable X-XSS-Protection
+    res.locals.csrf = req.session ? req.csrfToken() : ""; // CSRF
     req.articleProvider = articleProvider;
     req.uploadProvider = uploadProvider;
     next();
