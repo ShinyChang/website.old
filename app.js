@@ -92,6 +92,7 @@ app.all('/*', function(req, res, next) {
 
 // sitemap
 app.get('/sitemap.xml', index.sitemap);
+app.get('/rss', index.rss);
 
 
 // index not implement, redirect to article list
