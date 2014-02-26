@@ -10,6 +10,8 @@
     "ejs": "*",
     "mongodb": "*",
     "stylus": "*",
-    "jquery-file-upload-middleware": "*"
+    "jquery-file-upload-middleware": "*",
+    "xml2js": "*",
+    "cron": "*"
   }
 }
