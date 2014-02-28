@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  	<meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta http-equiv="content-language" content="zh-tw">
+  	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Shiny">
+    <title>天氣</title>
+    <meta name='description' content="最近12小時的天氣"></meta>
+    <link href='http://fonts.googleapis.com/css?family=Josefin+Sans' rel='stylesheet' type='text/css'>
+    <style>
+        body {
+            background: #555;
+            color: #eee;
+            font-family: 'Josefin Sans', sans-serif;
+            font-size:14px;
+        }
+        img {
+            max-width: 100%;
+            vertical-align: middle;
+        }
+        footer {
+            padding: 30px 0;
+        }
+        .city {
+            width: 33.33333333%;
+            display: inline-block;
+            box-sizing: border-box;
+        }
+        .box {
+            margin: 10px;
+            padding: 20px;
+            background: rgba(0,0,0,0.3);
+        }
+        .name {
+            font-size: 32px;
+            font-weight: bold;
+            line-height: 48px;
+            display: inline-block;
+            vertical-align: middle;
+        }
+        .template {
+            font-weight: 100;
+            color: #08c;
+            font-size: 1.2rem;
+        }
+        .template:after {
+            clear: both;
+        }
+        .note {
+            color:#aaa;
+        }
+        .rain {
+            color:#0c8;
+            float: right;
+        }
+        @media (max-width: 768px) {
+            .city {
+                width: 100%;
+            }
+        }
+        @media (min-width: 1024px) {
+            .city {
+                width: 25%;
+            }
+        }
+    </style>
+  </head>
+  <body>
+    <footer>
+        資料來源：<a href='http://opendata.cwb.gov.tw/‎'>開放資料平臺: 交通部中央氣象局</a>
+    </footer>
+    <script src='/javascripts/jquery-2.0.3.min.js'></script>
+    <script src='/playground/weather/tmpl.min.js'></script>
+    <script>
+        "use strict";
+        var weatherData = {};
+        var timeRange = [];
+
+        // get the weather infomation from open data
+        // original source(xml format): (http://opendata.cwb.gov.tw/opendata/MFC/F-C0032-001.xml)
+        // local cache(json format): http://shinychang.net/playground/weather/data.json
+        $.get("/playground/weather/data.json", function(data) {
+            var cities = data.fifowml.data[0].location;
+
+            cities.forEach(function(city, index) {
+                var cityData = city['weather-elements'][0]; // data of city
+                var rangeData = [];
+                for(var i = 0, max = 3; i < max; i++) {
+                    var detail = {}
+                    for(var prop in cityData) {
+                        var d = cityData[prop][0]['time'][i];
+                        detail[prop] = d['text'] && d['text'][0] || d['value'] && d['value'][0]; // CI, Wx
+                        detail[prop] = detail[prop]['_'] || detail[prop]; // MaxT, MinT, PoP
+                    }
+                    rangeData.push(detail);
+
+                    // first city
+                    if (!index) {
+                        timeRange.push(cityData[prop][0]['time'][i]["$"]);
+                    }
+                }
+                weatherData[city.name[0]] = rangeData;
+            });
+        },'json').done(function(){
+            for(var city in weatherData) {
+                weatherData[city].forEach(function(raw, idx) {
+                    switch(raw['Wx']) {
+                        case '晴時多雲':
+                            weatherData[city][idx]['img'] = "/playground/weather/sun.png";
+                            break;
+                        case '多雲時晴':
+                            weatherData[city][idx]['img'] = "/playground/weather/sun_cloud.png";
+                            break;
+                        case '多雲':
+                            weatherData[city][idx]['img'] = "/playground/weather/cloud.png";
+                            break;
+                        case '陰短暫雨':
+                        case '多雲短暫雨':
+                        case '多雲時陰短暫雨':
+                            weatherData[city][idx]['img'] = "/playground/weather/rain.png";
+                            break;
+                        default:
+                            weatherData[city][idx]['img'] = "/playground/weather/snow.png"; // unknow
+                            break;
+                    }
+                });
+            }
+
+            var template = tmpl("{% for(var idx in o.data) { var d = o.data[idx][0];  %}\
+<div class='city'>\
+    <div class='box'>\
+        <div class='name'>\
+            {%= idx %} <img src='{%= d.img %}' alt='{%= d.Wx %}'/>\
+        </div>\
+        <div class='template'><span class='rain'>{%= d.PoP %}%</span> {%= d.MinT %} C ~ {%= d.MaxT %} C</div>\
+        <span class='note'>{%= d.CI %}</span>\
+    </div>\
+</div>\
+{% } %}");
+            $("body").prepend(template({data: weatherData }) );
+
+        });
+    </script>
+  </body>
+</html>

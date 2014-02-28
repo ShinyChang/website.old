@@ -116,6 +116,11 @@ app.get('/article/archive', article.archive);
 app.get('/article/:id', article.show);
 
 
+// weather
+app.get('/weather', function(req, res){
+    res.render('playground/weather');
+});
+
 
 
 // server error
@@ -160,7 +165,7 @@ callback = function(response) {
     //the whole response has been recieved, so we just print it out here
     response.on('end', function() {
         parser.parseString(xml, function(err, result) {
-            fs.writeFile(path.join(__dirname, 'public') + "/weather.json", JSON.stringify(result), function(err) {
+            fs.writeFile(path.join(__dirname, 'public') + "/playground/weather/data.json", JSON.stringify(result), function(err) {
                 if (err) {
                     console.log(err);
                 } else {
