@@ -54,6 +54,12 @@
             color:#0c8;
             float: right;
         }
+        .current {
+            width: 100% !important;
+        }
+        .current .box{
+            background: rgba(208, 39, 240, 0.3);
+        }
         @media (max-width: 768px) {
             .city {
                 width: 100%;
@@ -128,7 +134,7 @@
             }
 
             var template = tmpl("{% for(var idx in o.data) { var d = o.data[idx][0];  %}\
-<div class='city'>\
+<div class='city' data-name='{%= idx%}'>\
     <div class='box'>\
         <div class='name'>\
             {%= idx %} <img src='{%= d.img %}' alt='{%= d.Wx %}'/>\
@@ -141,6 +147,20 @@
             $("body").prepend(template({data: weatherData }) );
 
         });
+
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(function (geo){
+            $.get("http://maps.googleapis.com/maps/api/geocode/json?latlng=" + geo.coords.latitude + "," + geo.coords.longitude + "&sensor=true", function(o){
+                $("[data-name='"+o['results'][4]['address_components'][0]['short_name']+"']").prependTo($("body")).addClass("current");
+            }, 'json');
+        }, error);
+    } else {
+      error('not supported');
+    }
+
+    function error(e){
+        console.log(e);
+    }
     </script>
   </body>
 </html>
