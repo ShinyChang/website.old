@@ -123,6 +123,7 @@
                             break;
                         case '陰短暫雨':
                         case '多雲短暫雨':
+                        case '陰時多雲短暫雨':
                         case '多雲時陰短暫雨':
                             weatherData[city][idx]['img'] = "/playground/weather/rain.png";
                             break;
@@ -145,22 +146,22 @@
 </div>\
 {% } %}");
             $("body").prepend(template({data: weatherData }) );
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(function (geo){
+                    $.get("http://maps.googleapis.com/maps/api/geocode/json?latlng=" + geo.coords.latitude + "," + geo.coords.longitude + "&sensor=true", function(o){
+                        $("[data-name='"+o['results'][4]['address_components'][0]['short_name']+"']").prependTo($("body")).addClass("current");
+                    }, 'json');
+                }, error);
+            } else {
+                error('not supported');
+            }
 
+            function error(e){
+                console.log(e);
+            }
         });
 
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(function (geo){
-            $.get("http://maps.googleapis.com/maps/api/geocode/json?latlng=" + geo.coords.latitude + "," + geo.coords.longitude + "&sensor=true", function(o){
-                $("[data-name='"+o['results'][4]['address_components'][0]['short_name']+"']").prependTo($("body")).addClass("current");
-            }, 'json');
-        }, error);
-    } else {
-      error('not supported');
-    }
 
-    function error(e){
-        console.log(e);
-    }
     </script>
   </body>
 </html>
