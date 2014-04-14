@@ -9,5 +9,5 @@ exports.lang = {
     tagArticleNotFound: '沒有找到文章。',
     goBack: '回上一頁',
     save: '儲存',
-    Portfolio: 'Portfolio'
+    portfolio: 'Portfolio'
 }
