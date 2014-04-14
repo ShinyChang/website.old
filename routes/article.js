@@ -37,6 +37,35 @@ exports.list = function(req, res) {
     });
 };
 
+exports.tag = function(req, res) {
+    articleProvider = req.articleProvider;
+    articleProvider.count(function(count) {
+        articleProvider.findTag(req.params.tag, function(error, article) {
+
+            var desc = "";
+            for (var o in article) {
+                desc += article[o].title + " ";
+            }
+            if (desc === "") {
+                res.render('not_found', {
+                    title: "標籤：" +　req.params.tag + "沒有找到任何文章",
+                    description : "標籤：" +　req.params.tag + "沒有找到任何文章",
+                    path: '/article'
+                });
+                return;
+            }
+            res.render('article_list', {
+                title: "標籤：" +　req.params.tag,
+                description: desc,
+                path: '/article',
+                articles: article,
+                next: 0,
+                prev: 0
+            });
+        });
+    });
+};
+
 exports.new = function(req, res) {
     articleProvider = req.articleProvider;
     articleProvider.save({
@@ -112,3 +141,5 @@ exports.archive = function(req, res) {
         });
     });
 };
+
+

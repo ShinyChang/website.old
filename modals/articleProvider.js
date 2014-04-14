@@ -34,6 +34,20 @@ ArticleProvider.prototype.findPage = function(page, callback) {
     });
 };
 
+ArticleProvider.prototype.findTag = function(tag, callback) {
+    this.getCollection(function(error, article_collection) {
+        if (error) callback(error)
+        else {
+            article_collection.find({tag: tag}).sort({
+                _id: -1
+            }).toArray(function(error, results) {
+                if (error) callback(error)
+                else callback(null, results)
+            });
+        }
+    });
+};
+
 ArticleProvider.prototype.findAll = function(sort, callback) {
     this.getCollection(function(error, article_collection) {
         if (error) callback(error)

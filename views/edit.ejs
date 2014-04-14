@@ -34,7 +34,7 @@
         <form method="post">
             <div class='row'>
                 <div class="input-group">
-                  <span class="input-group-addon">標題</span>
+                  <span class="input-group-addon"><%= lang.title%></span>
                   <input name='title' type="text" class="form-control" value="<%= article.title%>" autofocus>
                 </div>
                 <textarea  name='context' id='context' ><%- article.context %></textarea>
@@ -49,9 +49,9 @@
               </ul>
             </div>
             <div class='row text-right'>
-                <input class='btn btn-primary' type='submit' value='儲存'/>
+                <input class='btn btn-primary' type='submit' value='<%= lang.save %>'/>
             </div>
-            <input type="hidden" name="_csrf" value="<%= csrf%>"/>
+            <input type="hidden" name="_csrf" value="<%= csrf %>"/>
         </form>
     </div>
     <% include common/footer.ejs %>

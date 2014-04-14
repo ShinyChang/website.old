@@ -112,6 +112,7 @@ app.get('/article/new', article.new);
 app.get('/article/edit/:id', article.edit);
 app.post('/article/edit/:id', article.postEdit);
 app.get('/article/list', article.list);
+app.get('/article/tag/:tag', article.tag);
 app.get('/article/archive', article.archive);
 app.get('/article/:id', article.show);
 

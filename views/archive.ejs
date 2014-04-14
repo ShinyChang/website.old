@@ -30,7 +30,7 @@
                 </div>
                 <ul class='tag-box clearfix'>
                 <% for(tagIndex in article.tag) { var tag = article.tag[tagIndex]; %>
-                  <li><%= tag %></li>
+                  <li><a href='/article/tag/<%= tag %>'><%= tag %></a></li>
                 <% } %>
                 </ul>
               </li>

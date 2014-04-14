@@ -4,6 +4,6 @@
     var tags = tagString.toString().split(",");
     for(var o in tags) {
 %>
-    <li><%= tags[o] %></li>
+    <li><a href='/article/tag/<%= tags[o] %>'><%= tags[o] %></a></li>
     <% } %>
 </ul>

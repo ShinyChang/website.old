@@ -143,6 +143,8 @@ div[data-role="editor-toolbar"] {
   float: left;
   padding: 3px 0;
   margin-right: 5px;
+}
+.tag-box li a {
   color: #5a5;
 }
 .tag-box li:after {
