@@ -9,6 +9,7 @@ exports.list = function(req, res) {
 exports.about = function(req, res) {
     res.render('about', {
         title: "Shiny",
+        session: req.session,
         description: "",
         keywords:"",
         path: req.path,

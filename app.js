@@ -8,6 +8,9 @@ var articleProvider = new ArticleProvider('localhost', 27017);
 var UploadProvider = require('./modals/uploadProvider').UploadProvider;
 var uploadProvider = new UploadProvider('localhost', 27017);
 
+var UserProvider = require('./modals/userProvider').UserProvider;
+var userProvider = new UserProvider('localhost', 27017);
+
 var express = require('express');
 var upload = require('jquery-file-upload-middleware');
 
@@ -35,18 +38,24 @@ upload.on('error', function(e) {
 
 
 
+
+
+
+
+
 // require routers
+var config = require('./config').config;
+
+
 var routes = require('./routes');
 var user = require('./routes/user');
 var index = require('./routes/index');
 var article = require('./routes/article');
 
-// require locals
-var lib = require('./locals/lib').lib;
-var lang = require('./locals/lang').lang;
 
 var http = require('http');
 var path = require('path');
+var https = require('https');
 
 var app = express();
 app.disable('x-powered-by'); // remove header x-powered-by information
@@ -55,8 +64,8 @@ app.configure(function() {
     app.use(express.bodyParser());
 });
 app.locals({
-    lang: lang,
-    lib: lib
+    lang: require('./locals/lang').lang,
+    lib: require('./locals/lib').lib
 });
 
 
@@ -69,7 +78,7 @@ app.use(express.logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded());
 app.use(express.methodOverride());
-app.use(express.cookieParser('your secret here'));
+app.use(express.cookieParser(config.secret));
 app.use(express.session());
 app.use(express.csrf());
 app.use(app.router);
@@ -77,9 +86,54 @@ app.use(require('stylus').middleware(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'public')));
 
 // development only
-if ('development' == app.get('env')) {
+if ('development' === config.env) {
     app.use(express.errorHandler());
 }
+
+
+var OAuth2 = require('simple-oauth2')(config.oauth.github);
+
+// Initial page redirecting to Github
+app.get('/oauth/github', function(req, res) {
+    res.redirect(OAuth2.AuthCode.authorizeURL(config.oauth.github));
+});
+
+app.get('/oauth/callback', function(req, res) {
+    OAuth2.AuthCode.getToken({
+        code: req.query.code,
+        redirect_uri: config.oauth.github.redirect_uri
+    }, function(error, result) {
+        if (error) {
+            console.log('Access Token Error', error.message);
+        }
+        token = OAuth2.AccessToken.create(result);
+        https.get({
+            host: "api.github.com",
+            path: "/user?" + token.token,
+            headers: {
+                'user-agent': 'node.js'
+            }
+        }, function(r) {
+            var body = '';
+            r.on('data', function(d) {
+                body += d;
+            });
+            r.on('end', function() {
+                var githubUserInfo = JSON.parse(body);
+                req.session.userID = githubUserInfo.id;
+                req.session.userName = githubUserInfo.login;
+                res.redirect("/");
+            });
+        }).on('error', function(e) {
+            console.log("Got error: " + e.message);
+        });
+    });
+});
+
+
+
+
+
 
 // global controller
 app.all('/*', function(req, res, next) {
@@ -87,12 +141,15 @@ app.all('/*', function(req, res, next) {
     res.locals.csrf = req.session ? req.csrfToken() : ""; // CSRF
     req.articleProvider = articleProvider;
     req.uploadProvider = uploadProvider;
+    req.userProvider = userProvider;
+    req.config = config;
     next();
 });
 
 // sitemap
 app.get('/sitemap.xml', index.sitemap);
 app.get('/rss', index.rss);
+app.get('/logout', index.logout);
 
 
 // index not implement, redirect to article list
@@ -118,7 +175,7 @@ app.get('/article/:id', article.show);
 
 
 // weather
-app.get('/weather', function(req, res){
+app.get('/weather', function(req, res) {
     res.render('playground/weather');
 });
 

@@ -12,6 +12,7 @@
     "stylus": "*",
     "jquery-file-upload-middleware": "*",
     "xml2js": "*",
-    "cron": "*"
+    "cron": "*",
+    "simple-oauth2": "*"
   }
 }

@@ -2,8 +2,10 @@
  * GET home page.
  */
 exports.index = function(req, res) {
+    console.log(req.session.userID);
     res.render('index', {
         title: "Shiny",
+        session: req.session,
         description: "",
         keywords: "",
         path: req.path
@@ -30,3 +32,10 @@ exports.rss = function(req, res) {
         });
     });
 }
+
+exports.logout = function(req, res) {
+    req.session.userID = undefined;
+    req.session.userName = undefined;
+    res.redirect("/");
+}
+

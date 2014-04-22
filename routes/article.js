@@ -27,6 +27,7 @@ exports.list = function(req, res) {
             }
             res.render('article_list', {
                 title: "文章列表",
+                session: req.session,
                 description: desc,
                 path: '/article',
                 articles: article,
@@ -56,6 +57,7 @@ exports.tag = function(req, res) {
             }
             res.render('article_list', {
                 title: "標籤：" +　req.params.tag,
+                session: req.session,
                 description: desc,
                 path: '/article',
                 articles: article,
@@ -67,6 +69,11 @@ exports.tag = function(req, res) {
 };
 
 exports.new = function(req, res) {
+    if (req.config.adminID !== req.session.userID) {
+        res.redirect("/article/list");
+        return;
+    }
+
     articleProvider = req.articleProvider;
     articleProvider.save({
         title: 'untitled',
@@ -77,12 +84,18 @@ exports.new = function(req, res) {
 };
 
 exports.edit = function(req, res) {
+    if (req.config.adminID !== req.session.userID) {
+        res.redirect("/article/" + req.params.id);
+        return;
+    }
+
     articleProvider = req.articleProvider;
     uploadProvider = req.uploadProvider;
     uploadProvider.findAll(function(error, files) {
         articleProvider.findById(req.params.id, function(error, article) {
             res.render('edit', {
                 title: article.title,
+                session: req.session,
                 path: '/article',
                 article: article,
                 files: files
@@ -108,6 +121,7 @@ exports.show = function(req, res) {
     articleProvider.findById(req.params.id, function(error, article) {
         res.render('article', {
             title: article.title,
+            session: req.session,
             description: article.context.replace(/(<([^>]+)>)/ig, ""),
             path: '/article',
             article: article
@@ -135,6 +149,7 @@ exports.archive = function(req, res) {
 
         res.render('archive', {
             title: "文章列表",
+            session: req.session,
             description: desc,
             path: '/article/archive',
             list: list
