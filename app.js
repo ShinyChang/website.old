@@ -137,6 +137,10 @@ app.get('/oauth/callback', function(req, res) {
 
 // global controller
 app.all('/*', function(req, res, next) {
+    if (req.headers.host.match(/^www/) !== null ) {
+        res.redirect('http://' + req.headers.host.replace(/^www\./, '') + req.url);
+        return;
+    }
     res.header('X-XSS-Protection', 0); // disable X-XSS-Protection
     res.locals.csrf = req.session ? req.csrfToken() : ""; // CSRF
     req.articleProvider = articleProvider;
