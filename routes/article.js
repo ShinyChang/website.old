@@ -49,6 +49,7 @@ exports.tag = function(req, res) {
             }
             if (desc === "") {
                 res.render('not_found', {
+                    session: req.session,
                     title: "標籤：" +　req.params.tag + "沒有找到任何文章",
                     description : "標籤：" +　req.params.tag + "沒有找到任何文章",
                     path: '/article'
