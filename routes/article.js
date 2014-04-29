@@ -140,6 +140,9 @@ exports.archive = function(req, res) {
         }
 
         article.forEach(function(item){
+            if (!item.createTime) {
+                return;
+            }
             var year = item.createTime.getFullYear(),
                 month = item.createTime.getMonth() + 1;
 
