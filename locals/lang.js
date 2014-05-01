@@ -10,5 +10,9 @@ exports.lang = {
     articleNotFound: '沒有找到文章',
     goHome: '回首頁',
     save: '儲存',
-    portfolio: 'Portfolio'
+    portfolio: 'Portfolio',
+    signIn: '登入',
+    about: '關於',
+    article: '文章',
+    archive: '封存'
 }

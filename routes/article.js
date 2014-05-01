@@ -70,7 +70,7 @@ exports.tag = function(req, res) {
 };
 
 exports.new = function(req, res) {
-    if (req.config.adminID !== req.session.userID) {
+    if (config.adminID !== req.session.userID) {
         res.redirect("/article/list");
         return;
     }
@@ -85,7 +85,7 @@ exports.new = function(req, res) {
 };
 
 exports.edit = function(req, res) {
-    if (req.config.adminID !== req.session.userID) {
+    if (config.adminID !== req.session.userID) {
         res.redirect("/article/" + req.params.id);
         return;
     }

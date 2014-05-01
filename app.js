@@ -1,6 +1,8 @@
 /**
  * Module dependencies.
  */
+GLOBAL.lang = require('./locals/lang').lang;
+GLOBAL.config = require('./config').config;
 
 var ArticleProvider = require('./modals/articleProvider').ArticleProvider;
 var articleProvider = new ArticleProvider('localhost', 27017);
@@ -44,9 +46,6 @@ upload.on('error', function(e) {
 
 
 // require routers
-var config = require('./config').config;
-
-
 var routes = require('./routes');
 var user = require('./routes/user');
 var index = require('./routes/index');
@@ -64,7 +63,6 @@ app.configure(function() {
     app.use(express.bodyParser());
 });
 app.locals({
-    lang: require('./locals/lang').lang,
     lib: require('./locals/lib').lib
 });
 
@@ -146,7 +144,6 @@ app.all('/*', function(req, res, next) {
     req.articleProvider = articleProvider;
     req.uploadProvider = uploadProvider;
     req.userProvider = userProvider;
-    req.config = config;
     next();
 });
 

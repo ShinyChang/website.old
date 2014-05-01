@@ -14,14 +14,14 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse navbar-ex7-collapse">
             <ul class="nav navbar-nav">
-                <li <% if (path == "/about") {%>class="active"<% } %>><a href="/about">關於</a></li>
-                <li <% if (path == "/article") {%>class="active"<% } %>><a href="/article/list">文章</a></li>
-                <li <% if (path == "/article/archive") {%>class="active"<% } %>><a href="/article/archive">封存</a></li>
+                <li <% if (path == "/about") {%>class="active"<% } %>><a href="/about"><%= lang.about %></a></li>
+                <li <% if (path == "/article") {%>class="active"<% } %>><a href="/article/list"><%= lang.article %></a></li>
+                <li <% if (path == "/article/archive") {%>class="active"<% } %>><a href="/article/archive"><%= lang.archive %></a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li><a href='/rss'><i class="fa fa-rss"></i></a></li>
                 <% if (!session.userID) {%>
-                <li><a href='/oauth/github'>Sign In</a></li>
+                <li><a href='/oauth/github'><%= lang.signIn %></a></li>
                 <% } else { %>
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown"><%= session.userName %> <b class="caret"></b></a>
