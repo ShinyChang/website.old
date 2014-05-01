@@ -26,7 +26,7 @@ exports.list = function(req, res) {
                 desc += article[o].title + " ";
             }
             res.render('article_list', {
-                title: "文章列表",
+                title: lang.articleList,
                 session: req.session,
                 description: desc,
                 path: '/article',
@@ -50,14 +50,14 @@ exports.tag = function(req, res) {
             if (desc === "") {
                 res.render('not_found', {
                     session: req.session,
-                    title: "標籤：" +　req.params.tag + "沒有找到任何文章",
-                    description : "標籤：" +　req.params.tag + "沒有找到任何文章",
+                    title: "標籤：" + 　req.params.tag + "沒有找到任何文章",
+                    description: "標籤：" + 　req.params.tag + "沒有找到任何文章",
                     path: '/article'
                 });
                 return;
             }
             res.render('article_list', {
-                title: "標籤：" +　req.params.tag,
+                title: "標籤：" + 　req.params.tag,
                 session: req.session,
                 description: desc,
                 path: '/article',
@@ -120,6 +120,15 @@ exports.postEdit = function(req, res) {
 exports.show = function(req, res) {
     articleProvider = req.articleProvider;
     articleProvider.findById(req.params.id, function(error, article) {
+        if (!article) {
+            res.render('not_found', {
+                session: req.session,
+                title: lang.articleNotFound,
+                description: "文章編號：" + 　req.params.id + "不存在",
+                path: '/article'
+            });
+            return;
+        }
         res.render('article', {
             title: article.title,
             session: req.session,
@@ -139,7 +148,7 @@ exports.archive = function(req, res) {
             desc += article[o].title + " ";
         }
 
-        article.forEach(function(item){
+        article.forEach(function(item) {
             if (!item.createTime) {
                 return;
             }
@@ -152,7 +161,7 @@ exports.archive = function(req, res) {
         });
 
         res.render('archive', {
-            title: "文章列表",
+            title: lang.articleList,
             session: req.session,
             description: desc,
             path: '/article/archive',
@@ -160,5 +169,3 @@ exports.archive = function(req, res) {
         });
     });
 };
-
-

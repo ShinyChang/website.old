@@ -193,8 +193,11 @@ app.use(function(err, req, res, next) {
 
 // page not found
 app.use(function(req, res, next) {
-    res.render('404', {
-        status: 404
+    res.render('not_found', {
+        session: req.session,
+        title: "Page Not Found",
+        description: "Page not found.",
+        path: '/article'
     });
 });
 
