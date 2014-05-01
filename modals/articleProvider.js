@@ -81,7 +81,7 @@ ArticleProvider.prototype.count = function(callback) {
 
 ArticleProvider.prototype.findById = function(id, callback) {
     this.getCollection(function(error, article_collection) {
-        if (error) callback(error)
+        if (error || id.length !== 24) callback(error)
         else {
             article_collection.findOne({
                 _id: article_collection.db.bson_serializer.ObjectID.createFromHexString(id)
