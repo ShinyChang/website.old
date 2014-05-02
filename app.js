@@ -55,6 +55,8 @@ var article = require('./routes/article');
 var http = require('http');
 var path = require('path');
 var https = require('https');
+var fs = require('fs');
+var logFile = fs.createWriteStream('./log.txt', {flags: 'a'}); //use {flags: 'w'} to open in write mode
 
 var app = express();
 app.disable('x-powered-by'); // remove header x-powered-by information
@@ -72,7 +74,7 @@ app.set('port', process.env.PORT || 80);
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 app.use(express.favicon());
-app.use(express.logger('dev'));
+app.use(express.logger({stream: logFile}));
 app.use(express.json());
 app.use(express.urlencoded());
 app.use(express.methodOverride());
