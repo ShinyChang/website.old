@@ -55,37 +55,38 @@ var article = require('./routes/article');
 var http = require('http');
 var path = require('path');
 var https = require('https');
+var logger = require('morgan');
+var bodyParser = require('body-parser');
+var cookieParser = require('cookie-parser');
+var session = require('express-session');
+var csrf = require('csurf');
+var fs = require('fs');
+var logFile = fs.createWriteStream('./log.txt', {flags: 'a'}); //use {flags: 'w'} to open in write mode
 
 var app = express();
 app.disable('x-powered-by'); // remove header x-powered-by information
-app.configure(function() {
-    app.use('/upload', upload.fileHandler());
-    app.use(express.bodyParser());
-});
-app.locals({
+app.use('/upload', upload.fileHandler());
+
+app.locals = {
     lib: require('./locals/lib').lib
-});
+};
 
 
 // all environments
-app.set('port', process.env.PORT || 80);
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
-app.use(express.favicon());
-app.use(express.logger('dev'));
-app.use(express.json());
-app.use(express.urlencoded());
-app.use(express.methodOverride());
-app.use(express.cookieParser(config.secret));
-app.use(express.session());
-app.use(express.csrf());
-app.use(app.router);
+// app.use(express.favicon());
+app.use(logger({stream: logFile}));
+app.use(cookieParser(config.secret));
+app.use(session());
+app.use(bodyParser());
+app.use(csrf());
 app.use(require('stylus').middleware(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'public')));
 
 // development only
 if ('development' === config.env) {
-    app.use(express.errorHandler());
+    app.use(require('errorhandler')());
 }
 
 
@@ -198,9 +199,7 @@ app.use(function(req, res, next) {
     });
 });
 
-http.createServer(app).listen(app.get('port'), function() {
-    console.log('Express server listening on port ' + app.get('port'));
-});
+app.listen(80);
 
 
 
@@ -243,6 +242,5 @@ new cronJob({
     onTick: function() {
         http.request(options, callback).end();
     },
-    start: true,
-    timeZone: "Asia/Taipei"
-})
+    start: true
+});
