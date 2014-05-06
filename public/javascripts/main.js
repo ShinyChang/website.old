@@ -1,3 +1,5 @@
+"use strict";
+
 // Google Analytics
 var _gaq = _gaq || [];
 _gaq.push(['_setAccount', 'UA-27224084-3']);
@@ -50,44 +52,46 @@ window.___gcfg = {
 }(document, 'script', 'twitter-wjs');
 
 // global
-"use strict";
-var t = null;
-$(window).bind('scroll', function() {
-    clearTimeout(t);
-    t = setTimeout(function() {
-        $("body").toggleClass("scroll", $("body").scrollTop() > 0);
-    }, 100);
-});
-
-// Get the click event
-$("#backtotop").bind("click", function() {
-    // Set the body top margin
-    $("body").css({
-        "margin-top": -$(window).scrollTop() + "px",
-        "overflow-y": "scroll", // This property is posed for fix the blink of the window width change
+(function(){
+    var t = null;
+    $(window).bind('scroll', function() {
+        clearTimeout(t);
+        t = setTimeout(function() {
+            $("body").toggleClass("scroll", $("body").scrollTop() > 0);
+        }, 100);
     });
 
-    // Make the scroll handle on the position 0
-    $(window).scrollTop(0);
+    // Get the click event
+    $("#backtotop").bind("click", function() {
+        // Set the body top margin
+        $("body").css({
+            "margin-top": -$(window).scrollTop() + "px",
+            "overflow-y": "scroll", // This property is posed for fix the blink of the window width change
+        });
 
-    // Add the transition property to the body element
-    $("body").css("transition", "all 1s cubic-bezier(0.175, 0.885, 0.320, 1.275)");
+        // Make the scroll handle on the position 0
+        $(window).scrollTop(0);
 
-    // Apply the scroll effects
-    $("body").css("margin-top", "0");
+        // Add the transition property to the body element
+        $("body").css("transition", "all 1s cubic-bezier(0.175, 0.885, 0.320, 1.275)");
 
-    // Wait until the transition end
-    $("body").on("webkitTransitionEnd transitionend msTransitionEnd oTransitionEnd", function() {
-        // Remove the transition property
-        $("body").css("transition", "none");
+        // Apply the scroll effects
+        $("body").css("margin-top", "0");
+
+        // Wait until the transition end
+        $("body").on("webkitTransitionEnd transitionend msTransitionEnd oTransitionEnd", function() {
+            // Remove the transition property
+            $("body").css("transition", "none");
+        });
     });
-});
 
 
-// blank link if link is out of website
-$("a").each(function(idx, item) {
-    var href = $(this).attr('href');
-    if (/^((https?:)?\/\/(www\.)?shinychang.net|\/)/i.test(href) === false) {
-        $(this).attr("target", "_blank");
-    }
-});
+    // blank link if link is out of website
+    $("a").each(function(idx, item) {
+        var href = $(this).attr('href');
+        if (/^((https?:)?\/\/(www\.)?shinychang.net|\/)/i.test(href) === false) {
+            $(this).attr("target", "_blank");
+        }
+    });
+})();
+
