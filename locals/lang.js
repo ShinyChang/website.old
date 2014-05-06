@@ -14,5 +14,7 @@ exports.lang = {
     signIn: '登入',
     about: '關於',
     article: '文章',
-    archive: '封存'
+    archive: '封存',
+    logiout: '登出',
+    backToTop: '回到最上面'
 }
