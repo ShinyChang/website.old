@@ -16,5 +16,6 @@ exports.lang = {
     article: '文章',
     archive: '封存',
     logiout: '登出',
-    backToTop: '回到最上面'
+    backToTop: '回到最上面',
+    tagList: '標籤列表'
 }

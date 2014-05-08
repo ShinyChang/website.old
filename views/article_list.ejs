@@ -15,6 +15,7 @@
   <body>
   	   <% include common/nav.ejs %>
       <div class='container'>
+        <div class='col-lg-9'>
          <% for(o in articles) { var article = articles[o];%>
             <article>
                 <header class='clearfix'>
@@ -30,14 +31,29 @@
                 </div>
             </article>
          <% } %>
-        <ul class="pager">
-          <% if (prev > 0) { %>
-          <li class="previous"><a href="/article/list?page=<%= prev %>">&larr; <%= lang.newerArticle %></a></li>
-          <% } %>
-          <% if (next > 0) { %>
-          <li class="next"><a href="/article/list?page=<%= next %>"><%= lang.olderArticle %> &rarr;</a></li>
-          <% } %>
-        </ul>
+        </div>
+        <div class='col-lg-3'>
+          <div class="panel panel-default">
+            <div class="panel-heading"><%= lang.tagList %></div>
+            <div class="panel-body">
+              <ul class='tag-box clearfix'>
+                <% for(o in tagList) { var tag = tagList[o];%>
+                  <li><a href="/article/tag/<%= tag %>"><%= tag %></a></li>
+                <% }%>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class='col-xs-12'>
+          <ul class="pager">
+            <% if (prev > 0) { %>
+            <li class="previous"><a href="/article/list?page=<%= prev %>">&larr; <%= lang.newerArticle %></a></li>
+            <% } %>
+            <% if (next > 0) { %>
+            <li class="next"><a href="/article/list?page=<%= next %>"><%= lang.olderArticle %> &rarr;</a></li>
+            <% } %>
+          </ul>
+        </div>
     </div>
     <% include common/footer.ejs %>
     <script src="/javascripts/google-code-prettify/prettify.js"></script>

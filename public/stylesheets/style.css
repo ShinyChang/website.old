@@ -143,6 +143,9 @@ div[data-role="editor-toolbar"] {
 .tag-box li a {
   color: #5a5;
 }
+.tag-box li a:hover {
+  color: #2a6496;
+}
 .tag-box li:after {
   content: ",";
 }

@@ -54,6 +54,18 @@ ArticleProvider.prototype.findTag = function(tag, callback) {
     });
 };
 
+ArticleProvider.prototype.getAllTag = function(callback) {
+    this.getCollection(function(error, article_collection) {
+        if (error) callback(error)
+        else {
+            article_collection.distinct("tag", function(error, results) {
+                if (error) callback(error)
+                else callback(results)
+            });
+        }
+    });
+};
+
 ArticleProvider.prototype.findAll = function(sort, callback) {
     this.getCollection(function(error, article_collection) {
         if (error) callback(error)

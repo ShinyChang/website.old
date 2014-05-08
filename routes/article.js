@@ -3,36 +3,39 @@
  */
 exports.list = function(req, res) {
     articleProvider = req.articleProvider;
-    articleProvider.count(function(count) {
-        articleProvider.findPage(req.query.page, function(error, article) {
-            var totalPage = Math.ceil(count / 10),
-                currPage = req.query.page ? parseInt(req.query.page, 10) : 1;
+    articleProvider.getAllTag(function(tag){
+        articleProvider.count(function(count) {
+            articleProvider.findPage(req.query.page, function(error, article) {
+                var totalPage = Math.ceil(count / 10),
+                    currPage = req.query.page ? parseInt(req.query.page, 10) : 1;
 
-            var next = 0,
-                prev = 0;
-            if (totalPage > currPage) {
-                next = currPage + 1;
-                if (currPage > 1) {
-                    prev = currPage - 1;
+                var next = 0,
+                    prev = 0;
+                if (totalPage > currPage) {
+                    next = currPage + 1;
+                    if (currPage > 1) {
+                        prev = currPage - 1;
+                    }
+                } else if (totalPage === currPage) {
+                    if (currPage > 1) {
+                        prev = currPage - 1;
+                    }
                 }
-            } else if (totalPage === currPage) {
-                if (currPage > 1) {
-                    prev = currPage - 1;
-                }
-            }
 
-            var desc = "";
-            for (var o in article) {
-                desc += article[o].title + " ";
-            }
-            res.render('article_list', {
-                title: lang.articleList,
-                session: req.session,
-                description: desc,
-                path: '/article',
-                articles: article,
-                next: next,
-                prev: prev
+                var desc = "";
+                for (var o in article) {
+                    desc += article[o].title + " ";
+                }
+                res.render('article_list', {
+                    title: lang.articleList,
+                    session: req.session,
+                    description: desc,
+                    path: '/article',
+                    articles: article,
+                    next: next,
+                    prev: prev,
+                    tagList: tag
+                });
             });
         });
     });
@@ -40,30 +43,33 @@ exports.list = function(req, res) {
 
 exports.tag = function(req, res) {
     articleProvider = req.articleProvider;
-    articleProvider.count(function(count) {
-        articleProvider.findTag(req.params.tag, function(error, article) {
+    articleProvider.getAllTag(function(tag){
+        articleProvider.count(function(count) {
+            articleProvider.findTag(req.params.tag, function(error, article) {
 
-            var desc = "";
-            for (var o in article) {
-                desc += article[o].title + " ";
-            }
-            if (desc === "") {
-                res.render('not_found', {
+                var desc = "";
+                for (var o in article) {
+                    desc += article[o].title + " ";
+                }
+                if (desc === "") {
+                    res.render('not_found', {
+                        session: req.session,
+                        title: "標籤：" + 　req.params.tag + "沒有找到任何文章",
+                        description: "標籤：" + 　req.params.tag + "沒有找到任何文章",
+                        path: '/article'
+                    });
+                    return;
+                }
+                res.render('article_list', {
+                    title: "標籤：" + 　req.params.tag,
                     session: req.session,
-                    title: "標籤：" + 　req.params.tag + "沒有找到任何文章",
-                    description: "標籤：" + 　req.params.tag + "沒有找到任何文章",
-                    path: '/article'
+                    description: desc,
+                    path: '/article',
+                    articles: article,
+                    next: 0,
+                    prev: 0,
+                    tagList: tag
                 });
-                return;
-            }
-            res.render('article_list', {
-                title: "標籤：" + 　req.params.tag,
-                session: req.session,
-                description: desc,
-                path: '/article',
-                articles: article,
-                next: 0,
-                prev: 0
             });
         });
     });
