@@ -35,6 +35,22 @@ header .create-date {
   right: 0;
   color: #a52a2a;
 }
+.videoWrapper {
+  float: none;
+  clear: both;
+  width: 100%;
+  position: relative;
+  padding-bottom: 56.25%;
+  padding-top: 25px;
+  height: 0;
+}
+.videoWrapper iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
 /* general page */
 #backtotop {
   display: none;
