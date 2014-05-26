@@ -1,2 +1,3 @@
 User-agent: *
 Sitemap: http://shinychang.net/sitemap.xml
+Disallow: /cdn-cgi/
