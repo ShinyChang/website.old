@@ -41,26 +41,7 @@ upload.on('error', function(e) {
     console.log(e.message);
 });
 
-//game code
-app.get('/2048record', function(req, res){
-    var record = {
-        step: req.query.step,
-        bonus_max_tile_in_corner: req.query.bonus_max_tile_in_corner,
-        bonus_calc_lines: req.query.bonus_calc_lines,
-        bonus_weight_minus: req.query.bonus_weight_minus,
-        max_tile: req.query.max_tile,
-        score: req.query.score
-    }
-    gameProvider.save(info, function(error, record) {
-        console.log(record);
-    });
-});
 
-app.get('/2048result', function(req, res){
-    gameProvider.findAll(info, function(error, record) {
-        res.render(JSON.stringify(record));
-    });
-});
 
 
 
@@ -110,6 +91,26 @@ if ('development' === config.env) {
     app.use(require('errorhandler')());
 }
 
+//game code
+app.get('/2048record', function(req, res){
+    var record = {
+        step: req.query.step,
+        bonus_max_tile_in_corner: req.query.bonus_max_tile_in_corner,
+        bonus_calc_lines: req.query.bonus_calc_lines,
+        bonus_weight_minus: req.query.bonus_weight_minus,
+        max_tile: req.query.max_tile,
+        score: req.query.score
+    }
+    gameProvider.save(info, function(error, record) {
+        console.log(record);
+    });
+});
+
+app.get('/2048result', function(req, res){
+    gameProvider.findAll(info, function(error, record) {
+        res.render(JSON.stringify(record));
+    });
+});
 
 var OAuth2 = require('simple-oauth2')(config.oauth.github);
 
