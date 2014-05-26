@@ -47,7 +47,7 @@ app.get('/2048record', function(req, res){
         step: req.query.step,
         bonus_max_tile_in_corner: req.query.bonus_max_tile_in_corner,
         bonus_calc_lines: req.query.bonus_calc_lines,
-        bonus_weight_minus: req.query.bonus_weight_minus
+        bonus_weight_minus: req.query.bonus_weight_minus,
         max_tile: req.query.max_tile,
         score: req.query.score
     }
