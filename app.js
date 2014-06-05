@@ -101,14 +101,14 @@ app.get('/2048record', function(req, res){
         max_tile: req.query.max_tile,
         score: req.query.score
     }
-    gameProvider.save(info, function(error, record) {
-        console.log(record);
+    gameProvider.save(record, function(error, record) {
+	res.send(200, 'ok');
     });
 });
 
 app.get('/2048result', function(req, res){
     gameProvider.findAll(info, function(error, record) {
-        res.render(JSON.stringify(record));
+        res.send(200, JSON.stringify(record));
     });
 });
 
