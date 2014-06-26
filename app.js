@@ -93,6 +93,7 @@ if ('development' === config.env) {
 
 //game code
 app.get('/2048record', function(req, res){
+    gameProvider = req.gameProvider;
     var record = {
         step: req.query.step,
         bonus_max_tile_in_corner: req.query.bonus_max_tile_in_corner,
@@ -101,12 +102,13 @@ app.get('/2048record', function(req, res){
         max_tile: req.query.max_tile,
         score: req.query.score
     }
-    gameProvider.save(info, function(error, record) {
-        console.log(record);
+    gameProvider.save(record, function(error, record) {
+        res.render(JSON.stringify("ok"));
     });
 });
 
 app.get('/2048result', function(req, res){
+    gameProvider = req.gameProvider;
     gameProvider.findAll(info, function(error, record) {
         res.render(JSON.stringify(record));
     });
@@ -166,6 +168,7 @@ app.all('/*', function(req, res, next) {
     res.locals.csrf = req.session ? req.csrfToken() : ""; // CSRF
     req.articleProvider = articleProvider;
     req.uploadProvider = uploadProvider;
+    req.gameProvider = gameProvider;
     req.userProvider = userProvider;
     next();
 });
@@ -177,9 +180,7 @@ app.get('/logout', index.logout);
 
 
 // index not implement, redirect to article list
-app.get('/', function(req, res) {
-    res.redirect('/article/list/');
-});
+app.get('/', index.index);
 
 app.get('/about', user.about);
 

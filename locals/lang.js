@@ -1,4 +1,6 @@
 exports.lang = {
+    siteName: 'Shiny',
+    home: '首頁',
     ShinyChang: 'Shiny Chang',
     lastUpdate: '最後更新',
     author: '作者',
@@ -10,12 +12,14 @@ exports.lang = {
     articleNotFound: '沒有找到文章',
     goHome: '回首頁',
     save: '儲存',
-    portfolio: 'Portfolio',
     signIn: '登入',
     about: '關於',
     article: '文章',
     archive: '封存',
     logout: '登出',
     backToTop: '回到最上面',
-    tagList: '標籤列表'
+    tagList: '標籤列表',
+    recentArticle: '最新文章',
+    playground: '遊樂園',
+    portfolio: '作品集'
 }

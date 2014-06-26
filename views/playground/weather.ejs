@@ -90,7 +90,7 @@
     var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
     </script>
-    <script src='/javascripts/jquery-2.0.3.min.js'></script>
+    <script src='/javascripts/jquery.min.js'></script>
     <script src='/playground/weather/tmpl.min.js'></script>
     <script>
         "use strict";
@@ -125,25 +125,17 @@
         },'json').done(function(){
             for(var city in weatherData) {
                 weatherData[city].forEach(function(raw, idx) {
-                    switch(raw['Wx']) {
-                        case '晴時多雲':
-                            weatherData[city][idx]['img'] = "/playground/weather/sun.png";
-                            break;
-                        case '多雲時晴':
+                    if (raw['Wx'].indexOf("晴") !== -1) {
+                        weatherData[city][idx]['img'] = "/playground/weather/sun.png";
+                        if(raw['Wx'].indexOf("多雲") === 0) {
                             weatherData[city][idx]['img'] = "/playground/weather/sun_cloud.png";
-                            break;
-                        case '多雲':
-                            weatherData[city][idx]['img'] = "/playground/weather/cloud.png";
-                            break;
-                        case '陰短暫雨':
-                        case '多雲短暫雨':
-                        case '陰時多雲短暫雨':
-                        case '多雲時陰短暫雨':
-                            weatherData[city][idx]['img'] = "/playground/weather/rain.png";
-                            break;
-                        default:
-                            weatherData[city][idx]['img'] = "/playground/weather/snow.png"; // unknow
-                            break;
+                        }
+                    } else if(raw['Wx'].indexOf("雨") !== -1) {
+                        weatherData[city][idx]['img'] = "/playground/weather/rain.png";
+                    } else if(raw['Wx'].indexOf("雲") !== -1) {
+                        weatherData[city][idx]['img'] = "/playground/weather/cloud.png";
+                    } else {
+                        weatherData[city][idx]['img'] = "/playground/weather/snow.png"; // unknow
                     }
                 });
             }
@@ -154,7 +146,10 @@
         <div class='name'>\
             {%= idx %} <img src='{%= d.img %}' alt='{%= d.Wx %}'/>\
         </div>\
-        <div class='template'><span class='rain'>{%= d.PoP %}%</span> {%= d.MinT %} C ~ {%= d.MaxT %} C</div>\
+        <div class='template'>\
+            <span class='rain'>{%= d.PoP %}%</span> {%= d.MinT %} C ~ {%= d.MaxT %} C\
+            <div>{%= d.Wx %}</div>\
+        </div>\
         <span class='note'>{%= d.CI %}</span>\
     </div>\
 </div>\

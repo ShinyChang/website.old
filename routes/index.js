@@ -1,14 +1,15 @@
-/*
- * GET home page.
- */
 exports.index = function(req, res) {
-    console.log(req.session.userID);
-    res.render('index', {
-        title: "Shiny",
-        session: req.session,
-        description: "",
-        keywords: "",
-        path: req.path
+    var articleProvider = req.articleProvider;
+    articleProvider.findPage(1, function(error, article) {
+        var desc = "";
+        res.render('index', {
+            title: lang.home,
+            session: req.session,
+            description: "我是Shiny，主要語言PHP、JavaScript與CSS，自學Node.js中…",
+            keywords: "Shiny, PHP, JavaScript, Node.js",
+            path: req.path,
+            articles: article
+        });
     });
 };
 

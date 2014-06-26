@@ -5,63 +5,55 @@
  <meta http-equiv="content-language" content="zh-tw">
  <meta name="viewport" content="width=device-width, initial-scale=1.0">
  <meta name="author" content="Shiny">
- <title><%= title %></title>
+ <title><%= lib.siteName(title) %></title>
+ <meta name='description' content="<%= description %>"></meta>
+ <meta name="keywords" content="<%= keywords %>">
  <link rel='stylesheet' href='/stylesheets/bootstrap.min.css' />
  <link rel='stylesheet' href='/stylesheets/font-awesome.min.css' />
  <link rel='stylesheet' href='/stylesheets/style.css' />
 </head>
 <body>
     <% include common/nav.ejs %>
-    <div class='banner'>
-        <img src='/uploads/cover.jpg'/>
-    </div>
+    <div class='banner'></div>
     <div class='container'>
-        <div class="page-header">
-            <h1><%= lang.portfolio %> <small>Portfolio</small></h1>
-        </div>
         <div class='row'>
-            <div class='col-lg-4 col-md-6 col-xs-12'>
-                <div class="thumbnail">
-                    <a href="https://chrome.google.com/webstore/detail/cobalt-media-player/lomkdjfdigkefccckbebcanbmndlfjjk/details">   <img src='/images/cobalt-media-player.png'/>
+            <div class='col-xs-12'>
+                <div class="page-header">
+                    <h1><%= lang.recentArticle %></h1>
+                </div>
+                <div class="list-group">
+                <% for(o in articles) { var article = articles[o]; %>
+                    <a href='/article/<%= article.id%>' class='list-group-item clearfix'>
+                        <%= article.title%>
+                        <div class='pull-right'><%= lib.dateString(article.createTime)%></div>
                     </a>
-                    <div class="caption">
-                        <a href="https://chrome.google.com/webstore/detail/cobalt-media-player/lomkdjfdigkefccckbebcanbmndlfjjk/details">
-                            <center><h4>Cobalt Media Player</h4></center>
-                        </a>
-                        <ul class='category clearfix'>
-                            <li class='tag'>Chrome Extension</li>
-                        </ul>
-                    </div>
+                <% }%>
                 </div>
             </div>
-            <div class='col-lg-4 col-md-6 col-xs-12'>
-                <div class="thumbnail">
-                    <a href="https://chrome.google.com/webstore/detail/ez-zoom/pgjddfakmeeljhjhnhgakblggcfkmima">
-                        <img src='/images/ez-zoom.png'/>
+            <div class='col-xs-12'>
+                <div class="page-header">
+                    <h1><%= lang.portfolio %></h1>
+                </div>
+                <div class="list-group">
+                    <a href='https://chrome.google.com/webstore/detail/cobalt-media-player/lomkdjfdigkefccckbebcanbmndlfjjk' class='list-group-item clearfix'>
+                        Cobalt Media Player
+                        <div class='pull-right'>Chrome Extension</div>
                     </a>
-                    <div class="caption">
-                        <a href="https://chrome.google.com/webstore/detail/ez-zoom/pgjddfakmeeljhjhnhgakblggcfkmima">
-                        <center><h4>EZ Zoom</h4></center>
-                        </a>
-                        <ul class='category clearfix'>
-                            <li class='tag'>Chrome Extension</li>
-                        </ul>
-                    </div>
+                    <a href='https://chrome.google.com/webstore/detail/cobalt-media-player/lomkdjfdigkefccckbebcanbmndlfjjk' class='list-group-item clearfix'>
+                        EZ Zoom
+                        <div class='pull-right'>Chrome Extension</div>
+                    </a>
                 </div>
             </div>
-            <div class='col-lg-4 col-md-6 col-xs-12'>
-                <div class="thumbnail">
-                    <a href="https://chrome.google.com/webstore/detail/autoblanklink/bfodbjjnbclnojncnehcfillgilfdkpn">
-                        <img src='http://placehold.it/128x128'/>
+            <div class='col-xs-12'>
+                <div class="page-header">
+                    <h1><%= lang.playground %></h1>
+                </div>
+                <div class="list-group">
+                    <a href='/weather' class='list-group-item clearfix'>
+                        現在天氣
+                        <div class='pull-right'>Open Data</div>
                     </a>
-                    <div class="caption">
-                        <a href="https://chrome.google.com/webstore/detail/autoblanklink/bfodbjjnbclnojncnehcfillgilfdkpn">
-                        <center><h4>AutoBlankLink</h4></center>
-                        </a>
-                        <ul class='category clearfix'>
-                            <li class='tag'>Chrome Extension</li>
-                        </ul>
-                    </div>
                 </div>
             </div>
         </div>
