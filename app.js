@@ -13,9 +13,6 @@ var uploadProvider = new UploadProvider('localhost', 27017);
 var UserProvider = require('./modals/userProvider').UserProvider;
 var userProvider = new UserProvider('localhost', 27017);
 
-var GameProvider = require('./modals/gameProvider').GameProvider;
-var gameProvider = new GameProvider('localhost', 27017);
-
 var express = require('express');
 var upload = require('jquery-file-upload-middleware');
 
@@ -146,7 +143,6 @@ app.all('/*', function(req, res, next) {
     res.locals.csrf = req.session ? req.csrfToken() : ""; // CSRF
     req.articleProvider = articleProvider;
     req.uploadProvider = uploadProvider;
-    req.gameProvider = gameProvider;
     req.userProvider = userProvider;
     next();
 });
