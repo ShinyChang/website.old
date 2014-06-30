@@ -113,10 +113,12 @@ exports.edit = function(req, res) {
 
 exports.postEdit = function(req, res) {
     articleProvider = req.articleProvider;
+    console.log(req.body)
     articleProvider.save({
         id: req.params.id,
         title: req.body.title,
         context: req.body.context,
+        md: req.body.md,
         tag: req.body['hidden-tags'].toLowerCase().split(",")
     }, function(error, docs) {
         res.redirect('/article/' + docs.id);
