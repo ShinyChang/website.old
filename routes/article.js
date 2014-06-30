@@ -113,7 +113,6 @@ exports.edit = function(req, res) {
 
 exports.postEdit = function(req, res) {
     articleProvider = req.articleProvider;
-    console.log(req.body)
     articleProvider.save({
         id: req.params.id,
         title: req.body.title,
