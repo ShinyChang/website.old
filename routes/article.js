@@ -98,7 +98,7 @@ exports.edit = function(req, res) {
 
     articleProvider = req.articleProvider;
     uploadProvider = req.uploadProvider;
-    uploadProvider.findAll(function(error, files) {
+    uploadProvider.findNewest(18, function(error, files) {
         articleProvider.findById(req.params.id, function(error, article) {
             res.render('edit', {
                 title: article.title,
