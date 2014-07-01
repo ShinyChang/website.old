@@ -49,11 +49,12 @@ var routes = require('./routes');
 var user = require('./routes/user');
 var index = require('./routes/index');
 var article = require('./routes/article');
+var oauth = require('./routes/oauth');
 
 
 var http = require('http');
 var path = require('path');
-var https = require('https');
+
 var logger = require('morgan');
 var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
@@ -89,44 +90,10 @@ if ('development' === config.env) {
 }
 
 
-var OAuth2 = require('simple-oauth2')(config.oauth.github);
+
 
 // Initial page redirecting to Github
-app.get('/oauth/github', function(req, res) {
-    res.redirect(OAuth2.AuthCode.authorizeURL(config.oauth.github));
-});
 
-app.get('/oauth/callback', function(req, res) {
-    OAuth2.AuthCode.getToken({
-        code: req.query.code,
-        redirect_uri: config.oauth.github.redirect_uri
-    }, function(error, result) {
-        if (error) {
-            console.log('Access Token Error', error.message);
-        }
-        token = OAuth2.AccessToken.create(result);
-        https.get({
-            host: "api.github.com",
-            path: "/user?" + token.token,
-            headers: {
-                'user-agent': 'node.js'
-            }
-        }, function(r) {
-            var body = '';
-            r.on('data', function(d) {
-                body += d;
-            });
-            r.on('end', function() {
-                var githubUserInfo = JSON.parse(body);
-                req.session.userID = githubUserInfo.id;
-                req.session.userName = githubUserInfo.login;
-                res.redirect("/");
-            });
-        }).on('error', function(e) {
-            console.log("Got error: " + e.message);
-        });
-    });
-});
 
 
 
@@ -147,16 +114,18 @@ app.all('/*', function(req, res, next) {
     next();
 });
 
-// sitemap
-app.get('/sitemap.xml', index.sitemap);
-app.get('/rss', index.rss);
-app.get('/logout', index.logout);
 
 
 // index not implement, redirect to article list
 app.get('/', index.index);
-
 app.get('/about', user.about);
+app.get('/sitemap.xml', index.sitemap);
+app.get('/rss', index.rss);
+app.get('/logout', index.logout);
+
+// login
+app.get('/oauth/github', oauth.github);
+app.get('/oauth/callback', oauth.callback);
 
 // upload
 app.get('/upload', function(req, res) {
