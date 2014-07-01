@@ -1,6 +1,6 @@
 exports.lib = {
     siteName: function(name) {
-        return name + " | "  + lang.siteName
+        return name + " - "  + lang.siteName
     },
     timeDiff: function(dateString) {
         var day = 60 * 60 * 24,

@@ -11,20 +11,13 @@
     <link rel='stylesheet' href='/stylesheets/tagmanager.css' />
     <link rel='stylesheet' href='/stylesheets/style.css' />
     <style>
-        pre.prettyprint {
-            position: relative;
-            min-height: 40px;
+        textarea {
+          display: none;
         }
-
-        pre.prettyprint::before {
-            position: absolute;
-            content: "code";
-            right: 0;
-            top: 0;
-            background: #ddd;
-            padding: 5px 10px;
-            border-radius: 3px;
-            color: #777;
+        #epiceditor {
+          margin: 10px 0;
+          border-radius: 3px;
+          overflow: hidden;
         }
     </style>
   </head>
@@ -37,39 +30,79 @@
                   <span class="input-group-addon"><%= lang.title%></span>
                   <input name='title' type="text" class="form-control" value="<%= article.title%>" autofocus>
                 </div>
-                <textarea  name='context' id='context' ><%- article.context %></textarea>
+                <div id="epiceditor"></div>
+                <textarea name='md' id='md' ><%= article.md %></textarea>
+                <textarea name='context' id='context' ><%= article.context %></textarea>
                 <input type="text" name="tags" placeholder="Tags" class="tm-input form-control"/>
                 <input id="fileupload" type="file" name="files[]" data-url="/upload" multiple>
             </div>
-            <div class='row'>
-              <ul class='fileBox'>
+           <div class='row'>
+               <ul class='fileBox'>
                 <% for(var o in files) {%>
                   <li><img src='<%= files[o].url %>'></li>
                 <% } %>
               </ul>
             </div>
             <div class='row text-right'>
+              <div class='col-xs-12'>
                 <input class='btn btn-primary' type='submit' value='<%= lang.save %>'/>
+              </div>
             </div>
             <input type="hidden" name="_csrf" value="<%= csrf %>"/>
         </form>
     </div>
     <% include common/footer.ejs %>
     <script src="/javascripts/jquery.hotkeys.js"></script>
-    <script src="/ckeditor/ckeditor.js"></script>
+    <script src="/javascripts/epiceditor.min.js"></script>
     <script src="/javascripts/jquery.ui.widget.js"></script>
     <script src="/javascripts/jquery.fileupload.js"></script>
     <script src="/javascripts/tagmanager.js"></script>
     <script type="text/javascript">
       (function(window, $) {
+
+            // init file uplaod
             $('#fileupload').fileupload({
               dataType: 'json',
-              dropZone: $("body")
+              dropZone: $("body"),
+              done: function(e, data) {
+                var pool = [];
+                $.each(data.result.files, function(index, file) {
+                    if (typeof file.error !== 'undefined') {
+                        alert(file.error);
+                        return;
+                    }
+                    pool.push("<li><img src='" + file.url + "'></li>");
+                });
+                $(".fileBox").prepend(pool);
+              }
             });
+
+            // init tags
             $(".tm-input").tagsManager({prefilled: "<%= article.tag || "" %>"});
 
+            // init drop down
             $('.dropdown-toggle').dropdown();
-            CKEDITOR.replace( 'context' );
+
+            // init editor
+            var opts = {
+              container: 'epiceditor',
+              textarea: 'md',
+              basePath: '/stylesheets',
+              parser: marked,
+              theme: {
+                base: '/EpicEditor/base/epiceditor.css',
+                preview: '/EpicEditor/preview/preview-dark.css',
+                editor: '/EpicEditor/editor/epic-dark.css'
+              },
+              autogrow: {
+                minHeight: 300
+              }
+            }
+            var editor = new EpicEditor(opts);
+            editor.load();
+            editor.on('update', function(){
+              $("#context").val(editor.exportFile('epiceditor', 'html'));
+            });
       })(window, jQuery);
     </script>
   </body>

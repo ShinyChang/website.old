@@ -17,6 +17,22 @@ UploadProvider.prototype.getCollection = function(callback) {
     });
 };
 
+UploadProvider.prototype.findNewest = function(number, callback) {
+    number = number <= 0 || number > 18 ? 18 : number;
+
+    this.getCollection(function(error, upload_collection) {
+        if (error) callback(error)
+        else {
+            upload_collection.find().limit(number).sort({
+                _id: -1
+            }).toArray(function(error, results) {
+                if (error) callback(error)
+                else callback(null, results)
+            });
+        }
+    });
+};
+
 UploadProvider.prototype.findAll = function(callback) {
     this.getCollection(function(error, upload_collection) {
         if (error) callback(error)

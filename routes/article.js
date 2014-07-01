@@ -98,7 +98,7 @@ exports.edit = function(req, res) {
 
     articleProvider = req.articleProvider;
     uploadProvider = req.uploadProvider;
-    uploadProvider.findAll(function(error, files) {
+    uploadProvider.findNewest(18, function(error, files) {
         articleProvider.findById(req.params.id, function(error, article) {
             res.render('edit', {
                 title: article.title,
@@ -117,6 +117,7 @@ exports.postEdit = function(req, res) {
         id: req.params.id,
         title: req.body.title,
         context: req.body.context,
+        md: req.body.md,
         tag: req.body['hidden-tags'].toLowerCase().split(",")
     }, function(error, docs) {
         res.redirect('/article/' + docs.id);
