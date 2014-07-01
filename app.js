@@ -226,8 +226,6 @@ callback = function(response) {
             fs.writeFile(path.join(__dirname, 'public') + "/playground/weather/data.json", JSON.stringify(result), function(err) {
                 if (err) {
                     console.log(err);
-                } else {
-                    console.log("The file was saved!");
                 }
             });
         });

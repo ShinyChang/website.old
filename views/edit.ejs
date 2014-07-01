@@ -63,7 +63,18 @@
             // init file uplaod
             $('#fileupload').fileupload({
               dataType: 'json',
-              dropZone: $("body")
+              dropZone: $("body"),
+              done: function(e, data) {
+                var pool = [];
+                $.each(data.result.files, function(index, file) {
+                    if (typeof file.error !== 'undefined') {
+                        alert(file.error);
+                        return;
+                    }
+                    pool.push("<li><img src='" + file.url + "'></li>");
+                });
+                $(".fileBox").prepend(pool);
+              }
             });
 
             // init tags

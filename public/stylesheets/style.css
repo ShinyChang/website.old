@@ -176,12 +176,19 @@ div[data-role="editor-toolbar"] {
 }
 .fileBox li {
   width: 160px;
-  height: 160px;
+  height: 90px;
   display: inline-block;
   margin: 10px;
+  position: relative;
+  overflow: hidden;
 }
 .fileBox li img {
-  max-width: 100%;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  margin: auto;
 }
 .archive .year-box {
   margin-bottom: 30px;
