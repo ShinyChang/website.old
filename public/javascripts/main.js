@@ -15,6 +15,21 @@ _gaq.push(['_trackPageview']);
     s.parentNode.insertBefore(ga, s);
 })();
 
+
+// fancybox
+$(".fancybox").fancybox({
+    openEffect  : 'none',
+    closeEffect : 'none',
+    closeBtn: false,
+    closeClick:true,
+    helpers: {
+        buttons:{
+            tpl: '<div id="fancybox-buttons"><ul style="width:75px"><li><a class="btnToggle" title="Toggle size" href="javascript:;"></a></li><li><a class="btnClose" title="Close" href="javascript:;"></a></li></ul></div>'
+        }
+    }
+});
+
+
 // Facebook
 (function(d, s, id) {
     var js, fjs = d.getElementsByTagName(s)[0];
