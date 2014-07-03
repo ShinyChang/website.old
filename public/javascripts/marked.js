@@ -2,6 +2,7 @@
  * This file had been modified by Shiny.
  * change log:
  *   1. IMG support FancyBox
+ *   2. PRE support prettyprint
  *
  * marked - a markdown parser
  * Copyright (c) 2011-2014, Christopher Jeffrey. (MIT Licensed)
@@ -1239,7 +1240,7 @@ marked.defaults = {
   smartLists: false,
   silent: false,
   highlight: null,
-  langPrefix: 'lang-',
+  langPrefix: 'prettyprint lang-',
   smartypants: false,
   headerPrefix: '',
   renderer: new Renderer,
