@@ -98,6 +98,9 @@ body.scroll #backtotop {
 .socialBox {
   text-align: center;
 }
+.socialBox .fb_iframe_widget {
+  vertical-align: top;
+}
 #disqus_thread {
   margin-top: 50px;
 }
