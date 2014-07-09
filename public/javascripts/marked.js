@@ -769,17 +769,17 @@ Renderer.prototype.code = function(code, lang, escaped) {
   }
 
   if (!lang) {
-    return '<pre><code>'
+    return '<pre class="prettyprint">'
       + (escaped ? code : escape(code, true))
-      + '\n</code></pre>';
+      + '</pre>';
   }
 
-  return '<pre><code class="'
+  return '<pre class="prettyprint '
     + this.options.langPrefix
     + escape(lang, true)
     + '">'
     + (escaped ? code : escape(code, true))
-    + '\n</code></pre>\n';
+    + '</pre>\n';
 };
 
 Renderer.prototype.blockquote = function(quote) {
@@ -1240,7 +1240,7 @@ marked.defaults = {
   smartLists: false,
   silent: false,
   highlight: null,
-  langPrefix: 'prettyprint lang-',
+  langPrefix: 'lang-',
   smartypants: false,
   headerPrefix: '',
   renderer: new Renderer,
