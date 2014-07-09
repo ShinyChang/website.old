@@ -3,6 +3,10 @@
  * change log:
  *   1. IMG support FancyBox
  *   2. PRE support prettyprint
+ *   3. Video Iframe support (16:9)
+ *          @(url)
+ *   4. Code Iframe support (300px height)
+ *          %(url)
  *
  * marked - a markdown parser
  * Copyright (c) 2011-2014, Christopher Jeffrey. (MIT Licensed)
@@ -463,7 +467,9 @@ var inline = {
   code: /^(`+)\s*([\s\S]*?[^`])\s*\1(?!`)/,
   br: /^ {2,}\n(?!\s*$)/,
   del: noop,
-  text: /^[\s\S]+?(?=[\\<!\[_*`]| {2,}\n|$)/
+  text: /^[\s\S]+?(?=[\\<!\[_*`]| {2,}\n|$)/,
+  iframe: /^%[^\)]([\:\/\.\w\%]*)[^\(]/,
+  video: /^@[^\)]([\:\/\.\w\%]*)[^\(]/
 };
 
 inline._inside = /(?:\[[^\]]*\]|[^\[\]]|\](?=[^\[]*\]))*/;
@@ -570,6 +576,22 @@ InlineLexer.prototype.output = function(src) {
     , cap;
 
   while (src) {
+    if (cap = this.rules.iframe.exec(src)) {
+      src = src.substring(cap[0].length);
+      out += '<div class="codeWrapper">';
+      out += '<iframe class="codeWrapper" src="' + escape(cap[1]) + '" allowfullscreen frameborder="0"></iframe>';
+      out += '</div>';
+      continue;
+    }
+
+    if (cap = this.rules.video.exec(src)) {
+      src = src.substring(cap[0].length);
+      out += '<div class="embed-responsive embed-responsive-16by9">';
+      out += '<iframe src="' + escape(cap[1]) + '" allowfullscreen frameborder="0"></iframe>';
+      out += '</div>';
+      continue;
+    }
+
     // escape
     if (cap = this.rules.escape.exec(src)) {
       src = src.substring(cap[0].length);
