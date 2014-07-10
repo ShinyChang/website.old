@@ -117,6 +117,7 @@ exports.postEdit = function(req, res) {
         id: req.params.id,
         title: req.body.title,
         context: req.body.context,
+        intro: req.body.intro,
         md: req.body.md,
         tag: req.body['hidden-tags'].toLowerCase().split(",")
     }, function(error, docs) {

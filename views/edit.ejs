@@ -12,12 +12,12 @@
     <link rel='stylesheet' href='/stylesheets/style.css' />
     <style>
         textarea {
-          display: none;
+            display: none;
         }
         #epiceditor {
-          margin: 10px 0;
-          border-radius: 3px;
-          overflow: hidden;
+            margin: 10px 0;
+            border-radius: 3px;
+            overflow: hidden;
         }
     </style>
   </head>
@@ -33,6 +33,7 @@
                 <div id="epiceditor"></div>
                 <textarea name='md' id='md' ><%= article.md %></textarea>
                 <textarea name='context' id='context' ><%= article.context %></textarea>
+                <textarea name='intro' id='intro' ><%= article.intro %></textarea>
                 <input type="text" name="tags" placeholder="Tags" class="tm-input form-control"/>
                 <input id="fileupload" type="file" name="files[]" data-url="/upload" multiple>
             </div>
@@ -59,23 +60,23 @@
     <script src="/javascripts/jquery.fileupload.js"></script>
     <script src="/javascripts/tagmanager.js"></script>
     <script type="text/javascript">
-      (function(window, $) {
+        (function(window, $) {
 
             // init file uplaod
             $('#fileupload').fileupload({
-              dataType: 'json',
-              dropZone: $("body"),
-              done: function(e, data) {
-                var pool = [];
-                $.each(data.result.files, function(index, file) {
-                    if (typeof file.error !== 'undefined') {
-                        alert(file.error);
-                        return;
-                    }
-                    pool.push("<li><img src='" + file.url + "'></li>");
-                });
-                $(".fileBox").prepend(pool);
-              }
+                dataType: 'json',
+                dropZone: $("body"),
+                done: function(e, data) {
+                    var pool = [];
+                    $.each(data.result.files, function(index, file) {
+                        if (typeof file.error !== 'undefined') {
+                            alert(file.error);
+                            return;
+                        }
+                        pool.push("<li><img src='" + file.url + "'></li>");
+                    });
+                    $(".fileBox").prepend(pool);
+                }
             });
 
             // init tags
@@ -86,25 +87,36 @@
 
             // init editor
             var opts = {
-              container: 'epiceditor',
-              textarea: 'md',
-              basePath: '/stylesheets',
-              parser: marked,
-              theme: {
-                base: '/EpicEditor/base/epiceditor.css',
-                preview: '/EpicEditor/preview/preview-dark.css',
-                editor: '/EpicEditor/editor/epic-dark.css'
-              },
-              autogrow: {
-                minHeight: 300
-              }
-            }
+                container: 'epiceditor',
+                textarea: 'md',
+                basePath: '/stylesheets',
+                parser: marked,
+                theme: {
+                    base: '/EpicEditor/base/epiceditor.css',
+                    preview: '/EpicEditor/preview/preview-dark.css',
+                    editor: '/EpicEditor/editor/epic-dark.css'
+                },
+                autogrow: {
+                    minHeight: 300
+                }
+            };
+
             var editor = new EpicEditor(opts);
             editor.load();
             editor.on('update', function(){
-              $("#context").val(editor.exportFile('epiceditor', 'html'));
+                var context = $("<div></div>").html(editor.exportFile('epiceditor', 'html'));
+                $("#context").val(context.html());
+                if (context.find("hr").length) {
+                    var intro ='';
+                    $($(context).find("hr").eq(0).prevAll().get().reverse()).each(function(idx, item){
+                        intro += item.outerHTML+"\n";
+                    });
+                    $("#intro").val(intro + "<a href='/article/<%= article.id %>'><%= lang.readmore %></a>");
+                } else {
+                    $("#intro").val(context.html());
+                }
             });
-      })(window, jQuery);
+        })(window, jQuery);
     </script>
   </body>
 </html>

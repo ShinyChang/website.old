@@ -21,5 +21,6 @@ exports.lang = {
     tagList: '標籤列表',
     recentArticle: '最新文章',
     playground: '遊樂園',
-    portfolio: '作品集'
+    portfolio: '作品集',
+    readmore: '閱讀更多...'
 }
