@@ -1,0 +1,3 @@
+[submodule "public/MarkDownEditor"]
+	path = public/MarkDownEditor
+	url = git@github.com:ShinyChang/MarkDownEditor.git
