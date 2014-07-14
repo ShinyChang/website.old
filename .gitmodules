@@ -1,3 +1,3 @@
-[submodule "public/MarkDownEditor"]
-	path = public/MarkDownEditor
-	url = git@github.com:ShinyChang/MarkDownEditor.git
+[submodule "public/MarkdownEditor"]
+	path = public/MarkdownEditor
+	url = git@github.com:ShinyChang/MarkdownEditor.git
