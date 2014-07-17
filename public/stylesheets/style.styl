@@ -79,9 +79,22 @@ body.scroll #backtotop
 	height:500px;
 
 .profile
-	img
-		float:left;
-		margin-right:10px;
+	.profile-circle
+		display:inline-block;
+		border-radius:50%;
+		height: 80px;
+		width: 80px;
+		float: left;
+		padding: 5px;
+		background: #fff;
+		overflow:hidden;
+		border: 1px solid #eee;
+		margin-right: 15px;
+		.inner
+			border-radius: 50%;
+			background-size:cover;
+			background-position:center center;
+			height:100%;
 .experience
 	.date
 		float:right;
