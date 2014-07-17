@@ -843,7 +843,7 @@ Renderer.prototype.paragraph = function(text) {
 };
 
 Renderer.prototype.table = function(header, body) {
-  return '<table>\n'
+  return '<table class="table">\n'
     + '<thead>\n'
     + header
     + '</thead>\n'
