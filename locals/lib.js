@@ -20,6 +20,6 @@ exports.lib = {
     },
     dateString: function(date) {
         var d = new Date(date);
-        return d.getFullYear() + "年" + (d.getMonth() + 1) + "月" + (d.getDate()) + "日";
+        return d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + (d.getDate());
     }
 };

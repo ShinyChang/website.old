@@ -21,9 +21,13 @@
       <article>
         <header class='clearfix'>
           <h2><%= article.title%></h2>
-          <div class='create-date'><%= lib.dateString(article.createTime) %></div>
           <div class='desc'>
-            <%= lang.author %>：<a href="https://plus.google.com/+ZhiHongChang/?rel=author"><%= lang.ShinyChang %></a>，<%= lang.lastUpdate %>：<%= lib.timeDiff(article.lastUpdate) %>
+            <span title="<%= lang.author %>: <%= lang.ShinyChang %>">
+              <i class="fa fa-user"></i> <a href="https://plus.google.com/+ZhiHongChang/?rel=author"><%= lang.ShinyChang %></a>
+            </span>
+            <span title="<%= lang.createTime %>: <%= lib.dateString(article.createTime)%>">
+              <i class="fa fa-calendar"></i> <%= lib.dateString(article.createTime) %>
+            </span>
           </div>
           <% include common/tag.ejs %>
         </header>

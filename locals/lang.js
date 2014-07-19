@@ -3,6 +3,7 @@ exports.lang = {
     home: '首頁',
     ShinyChang: 'Shiny Chang',
     lastUpdate: '最後更新',
+    createTime: '建立時間',
     author: '作者',
     title: '標題',
     articleList: '文章列表',

@@ -126,6 +126,9 @@ body.scroll #backtotop {
   color: #ccc;
   font-weight: normal;
 }
+.desc span {
+  margin-right: 5px;
+}
 .social-list {
   margin: 10px 0;
 }
