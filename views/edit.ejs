@@ -8,18 +8,9 @@
     <title><%= lib.siteName(title) %></title>
     <link rel='stylesheet' href='/stylesheets/bootstrap.min.css' />
     <link rel='stylesheet' href='/stylesheets/font-awesome.min.css' />
+    <link rel='stylesheet' href='/MarkdownEditor/css/mdeditor.css' />
     <link rel='stylesheet' href='/stylesheets/tagmanager.css' />
     <link rel='stylesheet' href='/stylesheets/style.css' />
-    <style>
-        textarea {
-            display: none;
-        }
-        #epiceditor {
-            margin: 10px 0;
-            border-radius: 3px;
-            overflow: hidden;
-        }
-    </style>
   </head>
   <body>
   	<% include common/nav.ejs %>
@@ -30,10 +21,9 @@
                   <span class="input-group-addon"><%= lang.title%></span>
                   <input name='title' type="text" class="form-control" value="<%= article.title%>" autofocus>
                 </div>
-                <div id="epiceditor"></div>
                 <textarea name='md' id='md' ><%= article.md %></textarea>
-                <textarea name='context' id='context' ><%= article.context %></textarea>
-                <textarea name='intro' id='intro' ><%= article.intro %></textarea>
+                <textarea name='context' id='context' class='hide'><%= article.context %></textarea>
+                <textarea name='intro' id='intro' class='hide'><%= article.intro %></textarea>
                 <input type="text" name="tags" placeholder="Tags" class="tm-input form-control"/>
                 <input id="fileupload" type="file" name="files[]" data-url="/upload" multiple>
             </div>
@@ -53,8 +43,8 @@
         </form>
     </div>
     <% include common/footer.ejs %>
-    <script src="/javascripts/jquery.hotkeys.js"></script>
-    <script src="/javascripts/epiceditor.js"></script>
+    <script src="/MarkdownEditor/src/jquery.autosize.min.js"></script>
+    <script src="/MarkdownEditor/src/mdeditor.js"></script>
     <script src="/javascripts/marked.js"></script>
     <script src="/javascripts/jquery.ui.widget.js"></script>
     <script src="/javascripts/jquery.fileupload.js"></script>
@@ -85,36 +75,23 @@
             // init drop down
             $('.dropdown-toggle').dropdown();
 
-            // init editor
-            var opts = {
-                container: 'epiceditor',
-                textarea: 'md',
-                basePath: '/stylesheets',
-                parser: marked,
-                theme: {
-                    base: '/EpicEditor/base/epiceditor.css',
-                    preview: '/EpicEditor/preview/preview-dark.css',
-                    editor: '/EpicEditor/editor/epic-dark.css'
-                },
-                autogrow: {
-                    minHeight: 300
-                }
-            };
-
-            var editor = new EpicEditor(opts);
-            editor.load();
-            editor.on('update', function(){
-                var context = $("<div></div>").html(editor.exportFile('epiceditor', 'html'));
-                $("#context").val(context.html());
-                if (context.find("hr").length) {
-                    var intro ='';
-                    $($(context).find("hr").eq(0).prevAll().get().reverse()).each(function(idx, item){
-                        intro += item.outerHTML+"\n";
-                    });
-                    $("#intro").val(intro + "<a href='/article/<%= article.id %>'><%= lang.readmore %></a>");
-                } else {
-                    $("#intro").val(context.html());
-                }
+            // editor
+            $("#md").MDEditor({
+                parser: marked
+            }).bind('update', function(e, data){
+                // console.log(data.html); // {html: "string", md: "string"}
+                // var context = $("<div></div>").html(data.html);
+                console.log(data.html);
+                // $("#context").val(context.html());
+                // if (context.find("hr").length) {
+                //     var intro ='';
+                //     $($(context).find("hr").eq(0).prevAll().get().reverse()).each(function(idx, item){
+                //         intro += item.outerHTML+"\n";
+                //     });
+                //     $("#intro").val(intro + "<a href='/article/<%= article.id %>'><%= lang.readmore %></a>");
+                // } else {
+                //     $("#intro").val(context.html());
+                // }
             });
         })(window, jQuery);
     </script>
