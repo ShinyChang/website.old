@@ -214,36 +214,38 @@ div[data-role="editor-toolbar"] {
   left: 0;
   margin: auto;
 }
-.archive .year-box {
-  margin-bottom: 30px;
+.archive .year {
+  margin-top: 60px;
 }
-.archive .year-box .year {
-  width: 50px;
-  height: 50px;
-  line-height: 50px;
-  font-size: 18px;
-  background: #38b;
+.archive .year:first-child {
+  margin-top: 20px;
+}
+.archive .item {
+  position: relative;
+  background: #fff;
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin-bottom: 15px;
+  padding-left: 80px;
+}
+.archive .item .date {
+  box-sizing: border-box;
+  position: absolute;
+  left: -10px;
+  width: 70px;
   color: #fff;
-  font-weight: bold;
   text-align: center;
-  float: left;
-}
-.archive .year-box .month-box {
-  float: left;
-}
-.archive .year-box .month-box .month {
-  width: 50px;
-  height: 50px;
-  line-height: 50px;
-  font-size: 24px;
+  font-weight: bold;
   background: #777;
-  color: #fff;
-  font-weight: bold;
-  text-align: center;
 }
-.archive .year-box .month-box .article-box .article-item {
-  margin: 10px 0;
-}
-.archive .year-box .month-box .article-box .article-item .title {
-  font-weight: bold;
+.archive .item .date:before {
+  display: block;
+  width: 10px;
+  height: 0px;
+  position: absolute;
+  bottom: -10px;
+  left: 0;
+  content: "";
+  border-bottom: 10px solid transparent;
+  border-right: 10px solid #666;
 }
