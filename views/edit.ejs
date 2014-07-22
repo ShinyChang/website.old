@@ -79,19 +79,18 @@
             $("#md").MDEditor({
                 parser: marked
             }).bind('update', function(e, data){
-                // console.log(data.html); // {html: "string", md: "string"}
-                // var context = $("<div></div>").html(data.html);
-                console.log(data.html);
-                // $("#context").val(context.html());
-                // if (context.find("hr").length) {
-                //     var intro ='';
-                //     $($(context).find("hr").eq(0).prevAll().get().reverse()).each(function(idx, item){
-                //         intro += item.outerHTML+"\n";
-                //     });
-                //     $("#intro").val(intro + "<a href='/article/<%= article.id %>'><%= lang.readmore %></a>");
-                // } else {
-                //     $("#intro").val(context.html());
-                // }
+                var context = $("<div></div>").html(data.html);
+
+                $("#context").val(context.html());
+                if (context.find("hr").length) {
+                    var intro ='';
+                    $($(context).find("hr").eq(0).prevAll().get().reverse()).each(function(idx, item){
+                        intro += item.outerHTML+"\n";
+                    });
+                    $("#intro").val(intro + "<a href='/article/<%= article.id %>'><%= lang.readmore %></a>");
+                } else {
+                    $("#intro").val(context.html());
+                }
             });
         })(window, jQuery);
     </script>
