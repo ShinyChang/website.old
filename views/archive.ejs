@@ -14,32 +14,20 @@
   <body>
     <% include common/nav.ejs %>
     <div class='archive container'>
-    <% var start = 1; %>
-    <% for(var year in list) {%>
-      <div class='year-box clearfix'>
-        <div class='year'><%= year %></div>
-        <div class='month-box clearfix'>
-          <% for(var month in list[year]) { %>
-            <div class='month'><%= month %></div>
-            <ol class='article-box' start='<%= start %>'>
-            <% start += list[year][month].length %>
-            <% for(var idx in list[year][month]) { var article = list[year][month][idx]; %>
-              <li class='article-item'>
-                <div class='title'>
-                  <a href='/article/<%= article.id %>'><%= article.title %></a>
-                </div>
-                <ul class='tag-box clearfix'>
-                <% for(tagIndex in article.tag) { var tag = article.tag[tagIndex]; %>
-                  <li><a href='/article/tag/<%= tag %>'><%= tag %></a></li>
-                <% } %>
-                </ul>
-              </li>
+      <% for(var year = list.length - 1; year >= 0; year--) { if (!list[year]) return ; %>
+        <h1 class='year '><%= year %> <small>(<%= list[year].length %>)</small></h1>
+        <% for(var idx in list[year]) {var article = list[year][idx];  %>
+          <div class='item clearfix'>
+            <div class='date'><%= article.createTime.toString().substr(4, 6)%></div>
+            <a href='/article/<%= article.id %>'><%=article.title%></a>
+            <ul class='tag-box'>
+            <% for(var o in article.tag) { var tag = article.tag[o]%>
+              <li class='tag'><a href='/article/tag/<%= tag %>'><%= tag %></a></li>
             <% } %>
-            </ol>
-          <% } %>
-        </div>
-      </div>
-    <% } %>
+            </ul>
+          </div>
+        <% } %>
+      <% } %>
     </div>
     <% include common/footer.ejs %>
   </body>

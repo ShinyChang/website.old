@@ -149,9 +149,9 @@ exports.show = function(req, res) {
 
 exports.archive = function(req, res) {
     articleProvider = req.articleProvider;
-    articleProvider.findAll(1, function(error, article) {
+    articleProvider.findAll(-1, function(error, article) {
         var desc = "",
-            list = {};
+            list = [];
         for (var o in article) {
             desc += article[o].title + " ";
         }
@@ -160,12 +160,10 @@ exports.archive = function(req, res) {
             if (!item.createTime) {
                 return;
             }
-            var year = item.createTime.getFullYear(),
-                month = item.createTime.getMonth() + 1;
+            var year = item.createTime.getFullYear();
 
-            list[year] = list[year] || {};
-            list[year][month] = list[year][month] || [];
-            list[year][month].push(item);
+            list[year] = list[year] || [];
+            list[year].push(item);
         });
 
         res.render('archive', {
