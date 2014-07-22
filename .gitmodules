@@ -1,0 +1,3 @@
+[submodule "public/MarkdownEditor"]
+	path = public/MarkdownEditor
+	url = git@github.com:ShinyChang/MarkdownEditor.git
