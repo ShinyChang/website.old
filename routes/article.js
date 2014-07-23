@@ -137,12 +137,18 @@ exports.show = function(req, res) {
             });
             return;
         }
-        res.render('article', {
-            title: article.title,
-            session: req.session,
-            description: article.context.replace(/(<([^>]+)>)/ig, ""),
-            path: '/article',
-            article: article
+        articleProvider.findNext(article.id, function(error, next){
+            articleProvider.findPrev(article.id, function(error, prev){
+                res.render('article', {
+                    title: article.title,
+                    session: req.session,
+                    description: article.context.replace(/(<([^>]+)>)/ig, ""),
+                    path: '/article',
+                    article: article,
+                    next: next,
+                    prev: prev
+                });
+            });
         });
     });
 };
