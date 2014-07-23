@@ -105,6 +105,34 @@ ArticleProvider.prototype.findById = function(id, callback) {
     });
 };
 
+ArticleProvider.prototype.findPrev = function(id, callback) {
+    this.getCollection(function(error, article_collection) {
+        if (error || id.length !== 24) callback(error)
+        else {
+            article_collection.find({
+                _id: {$lt: article_collection.db.bson_serializer.ObjectID.createFromHexString(id)}
+            }).sort({_id: -1}).limit(1).toArray(function(error, result) {
+                if (error) callback(error)
+                else callback(null, result[0])
+            });
+        }
+    });
+};
+
+ArticleProvider.prototype.findNext = function(id, callback) {
+    this.getCollection(function(error, article_collection) {
+        if (error || id.length !== 24) callback(error)
+        else {
+            article_collection.find({
+                _id: {$gt: article_collection.db.bson_serializer.ObjectID.createFromHexString(id)}
+            }).sort({_id: 1}).limit(1).toArray(function(error, result) {
+                if (error) callback(error)
+                else callback(null, result[0])
+            });
+        }
+    });
+};
+
 ArticleProvider.prototype.save = function(articles, callback) {
     this.getCollection(function(error, article_collection) {
         if (error) callback(error)
