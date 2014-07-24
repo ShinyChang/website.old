@@ -15,7 +15,7 @@
   <body>
     <% include common/nav.ejs %>
     <div class='archive container'>
-      <% for(var year = list.length - 1; year >= 0; year--) { if (!list[year]) return ; %>
+      <% for(var year = list.length - 1; year >= 0; year--) { if (!list[year]) continue ; %>
         <h1 class='year '><%= year %> <small>(<%= list[year].length %>)</small></h1>
         <% for(var idx in list[year]) {var article = list[year][idx];  %>
           <div class='item clearfix'>
