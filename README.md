@@ -5,7 +5,7 @@ website
 TODO
 ====
   - [x] markdown editor  
-  - [ ] next/prev post
+  - [x] next/prev post
   - [x] recent posts
   - [ ] drag and drop upload and insert into markdown editor
   - [ ] upload repo

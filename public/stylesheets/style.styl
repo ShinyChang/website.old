@@ -1,48 +1,51 @@
 /* global */
+color-blue = #428bca
+
+
 a
-	cursor: pointer;
+	cursor: pointer
 a:hover, a:focus
-	text-decoration: none;
+	text-decoration: none
 img
-	max-width:100%;
+	max-width:100%
 footer
-	padding:80px 0;
-	text-align:center;
+	padding:80px 0
+	text-align:center
 article
-	position: relative;
-	padding:20px;
-	background:#fff;
-	border:1px solid #ddd;
-	border-radius:3px;
-	margin-bottom:50px;
+	position: relative
+	padding:20px
+	background:#fff
+	border:1px solid #ddd
+	border-radius:3px
+	margin-bottom:50px
 header
-	position: relative;
-	margin-bottom:40px;
+	position: relative
+	margin-bottom:40px
 	h2
-		font-weight:bold;
+		font-weight:bold
 	.create-date
-		position:absolute;
-		top:0;
-		right:0;
+		position:absolute
+		top:0
+		right:0
 		color:brown
 .codeWrapper
 	iframe
-		width: 100%;
-		height: 400px;
+		width: 100%
+		height: 400px
 .videoWrapper
-	float: none;
-	clear: both;
-	width: 100%;
-	position: relative;
-	padding-bottom: 56.25%;
-	padding-top: 25px;
-	height: 0;
+	float: none
+	clear: both
+	width: 100%
+	position: relative
+	padding-bottom: 56.25%
+	padding-top: 25px
+	height: 0
 	iframe
-		position: absolute;
-		top: 0;
-		left: 0;
-		width: 100%;
-		height: 100%;
+		position: absolute
+		top: 0
+		left: 0
+		width: 100%
+		height: 100%
 
 
 
@@ -53,174 +56,176 @@ header
 
 /* general page */
 #backtotop
-	display:none;
-	position:fixed;
-	right:10px;
-	bottom:10px;
-	opacity: 0.5;
-	transition: opacity 0.5s;
-	cursor:pointer;
-	width:4em;
-	height:4em;
-	line-height:4em;
+	position:fixed
+	right:15px
+	bottom:-40px
+	opacity: 0.5
+	cursor:pointer
+	transition: bottom 0.25s ease
+	color: #fff
 	.fa-circle
-		font-size:4em;
-	.fa-chevron-up
-		font-size:2em;
+		font-size:2em
+		border:1px solid color-blue
+		border-radius: 50%
+	.fa-angle-up
+		color: color-blue
+
 body.scroll #backtotop
-	display:block;
+	bottom: 15px
+	transition: bottom 0.25s ease
 #backtotop:hover
-	opacity: 0.7;
-	transition: opacity 0.5s;
+	opacity: 1
+	transition: bottom 0.25s ease
+
 .banner
-	margin-top:-20px;
-	background: url(/uploads/cover.jpg) center center;
-	background-size:cover;
-	height:500px;
+	margin-top:-20px
+	background: url(/uploads/cover.jpg) center center
+	background-size:cover
+	height:500px
 
 .profile
 	.profile-circle
-		display:inline-block;
-		border-radius:50%;
-		height: 80px;
-		width: 80px;
-		float: left;
-		padding: 5px;
-		background: #fff;
-		overflow:hidden;
-		border: 1px solid #eee;
-		margin-right: 15px;
+		display:inline-block
+		border-radius:50%
+		height: 80px
+		width: 80px
+		float: left
+		padding: 5px
+		background: #fff
+		overflow:hidden
+		border: 1px solid #eee
+		margin-right: 15px
 		.inner
-			border-radius: 50%;
-			background-size:cover;
-			background-position:center center;
-			height:100%;
+			border-radius: 50%
+			background-size:cover
+			background-position:center center
+			height:100%
 .experience
 	.date
-		float:right;
-		color:gray;
+		float:right
+		color:gray
 	.job
-		float:right;
-		color:green;
-		margin-right:10px;
+		float:right
+		color:green
+		margin-right:10px
 .socialBox
-	text-align:center;
+	text-align:center
 	.fb_iframe_widget
-		vertical-align:top;
+		vertical-align:top
 
 #disqus_thread
-	margin-top:50px;
+	margin-top:50px
 .desc
-	color:#ccc;
-	font-weight:normal;
+	color:#ccc
+	font-weight:normal
 	span
-		margin-right: 5px;
+		margin-right: 5px
 .social-list
-	margin: 10px 0;
+	margin: 10px 0
 	a
-		display:inline-block;
-		margin: 5px 10px;
-		font-size:36px;
-		color: gray;
+		display:inline-block
+		margin: 5px 10px
+		font-size:36px
+		color: gray
 		&:hover
-			color:#2a6496;
+			color:#2a6496
 
 
 
 
 /* write page */
 div[data-role="editor-content"]
-	min-height: 250px;
-	background-color: white;
-	border-collapse: separate;
-	border: 1px solid rgb(204, 204, 204);
-	padding: 4px;
-	margin-bottom:20px;
-	box-sizing: content-box;
-	-webkit-box-shadow: rgba(0, 0, 0, 0.0745098) 0px 1px 1px 0px inset;
-	box-shadow: rgba(0, 0, 0, 0.0745098) 0px 1px 1px 0px inset;
-	border-radius: 3px;
-	overflow: scroll;
-	outline: none;
+	min-height: 250px
+	background-color: white
+	border-collapse: separate
+	border: 1px solid rgb(204, 204, 204)
+	padding: 4px
+	margin-bottom:20px
+	box-sizing: content-box
+	-webkit-box-shadow: rgba(0, 0, 0, 0.0745098) 0px 1px 1px 0px inset
+	box-shadow: rgba(0, 0, 0, 0.0745098) 0px 1px 1px 0px inset
+	border-radius: 3px
+	overflow: scroll
+	outline: none
 
 div[data-role="editor-toolbar"]
-	margin: 10px 0;
-	-webkit-user-select: none;
-	-moz-user-select: none;
-	-ms-user-select: none;
-	user-select: none;
+	margin: 10px 0
+	-webkit-user-select: none
+	-moz-user-select: none
+	-ms-user-select: none
+	user-select: none
 .tm-input
-	width: 120px;
+	width: 120px
 
 .tag-box
-	padding: 0;
-	margin:0;
-	list-style:none;
-	font-size:14px;
-	font-weight:normal;
+	padding: 0
+	margin:0
+	list-style:none
+	font-size:14px
+	font-weight:normal
 	li
-		float:left;
-		padding:3px 0;
-		margin-right:5px;
+		float:left
+		padding:3px 0
+		margin-right:5px
 		a
-			color:#5a5;
+			color:#5a5
 		a:hover
-			color:#2a6496;
+			color:#2a6496
 	li:after
-		content: ",";
+		content: ","
 	li:last-child:after
-		content: "";
+		content: ""
 #fileupload
-	display:none;
+	display:none
 .fileBox
-	padding: 0;
-	margin: 0;
-	list-style:none;
+	padding: 0
+	margin: 0
+	list-style:none
 	li
-		width: 160px;
-		height: 90px;
-		display:inline-block;
-		margin:10px;
-		position:relative;
-		overflow:hidden;
+		width: 160px
+		height: 90px
+		display:inline-block
+		margin:10px
+		position:relative
+		overflow:hidden
 		img
-			position:absolute;
-			top:0;
-			bottom:0;
-			right:0;
-			left:0;
-			margin:auto;
+			position:absolute
+			top:0
+			bottom:0
+			right:0
+			left:0
+			margin:auto
 
 
 .archive
 	.year
-		margin-top: 60px;
+		margin-top: 60px
 		&:first-child
-			margin-top: 20px;
+			margin-top: 20px
 	.item
-		position:relative;
-		background:#fff;
-		border:1px solid #ccc;
-		padding: 10px;
-		margin-bottom: 15px;
-		padding-left: 80px;
+		position:relative
+		background:#fff
+		border:1px solid #ccc
+		padding: 10px
+		margin-bottom: 15px
+		padding-left: 80px
 		.date
-			box-sizing: border-box;
-			position:absolute;
-			left: -10px;
-			width: 70px;
-			color:#fff;
-			text-align:center;
-			font-weight: bold;
-			background: #777;
+			box-sizing: border-box
+			position:absolute
+			left: -10px
+			width: 70px
+			color:#fff
+			text-align:center
+			font-weight: bold
+			background: #777
 			&:before
-				display: block;
-				width: 10px;
-				height: 0px;
-				position: absolute;
-				bottom: -10px;
-				left: 0;
-				content: "";
-				border-bottom: 10px solid transparent;
-				border-right: 10px solid #666;
+				display: block
+				width: 10px
+				height: 0px
+				position: absolute
+				bottom: -10px
+				left: 0
+				content: ""
+				border-bottom: 10px solid transparent
+				border-right: 10px solid #666
 
