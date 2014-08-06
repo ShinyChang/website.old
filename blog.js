@@ -1,6 +1,7 @@
 /**
  * Module dependencies.
  */
+
 GLOBAL.lang = require('./locals/lang').lang;
 GLOBAL.config = require('./config').config;
 
@@ -40,17 +41,12 @@ upload.on('error', function(e) {
 
 
 
-
-
-
-
 // require routers
 var routes = require('./routes');
 var user = require('./routes/user');
 var index = require('./routes/index');
 var article = require('./routes/article');
 var oauth = require('./routes/oauth');
-
 
 var http = require('http');
 var path = require('path');
@@ -61,7 +57,9 @@ var cookieParser = require('cookie-parser');
 var session = require('express-session');
 var csrf = require('csurf');
 var fs = require('fs');
-var logFile = fs.createWriteStream('./log.txt', {flags: 'a'}); //use {flags: 'w'} to open in write mode
+var logFile = fs.createWriteStream('./log.txt', {
+    flags: 'a'
+});
 
 var app = express();
 app.disable('x-powered-by'); // remove header x-powered-by information
@@ -71,16 +69,17 @@ app.locals = {
     lib: require('./locals/lib').lib
 };
 
-
 // all environments
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 // app.use(express.favicon());
-app.use(logger({stream: logFile}));
+app.use(logger({
+    stream: logFile
+}));
 app.use(cookieParser(config.secret));
 app.use(session());
 app.use(bodyParser.urlencoded({
-  extended: true
+    extended: true
 }));
 app.use(bodyParser.json())
 app.use(csrf());
@@ -92,20 +91,9 @@ if ('development' === config.env) {
     app.use(require('errorhandler')());
 }
 
-
-
-
-// Initial page redirecting to Github
-
-
-
-
-
-
-
 // global controller
 app.all('/*', function(req, res, next) {
-    if (req.headers.host.match(/^www/) !== null ) {
+    if (req.headers.host.match(/^www/) !== null) {
         res.redirect('http://' + req.headers.host.replace(/^www\./, '') + req.url);
         return;
     }
@@ -149,8 +137,6 @@ app.get('/weather', function(req, res) {
     res.render('playground/weather');
 });
 
-
-
 // server error
 app.use(function(err, req, res, next) {
     console.error(err.stack);
@@ -167,46 +153,4 @@ app.use(function(req, res, next) {
     });
 });
 
-app.listen(config.port);
-
-
-
-
-// sample code
-var http = require('http');
-var parser = require('xml2js');
-var fs = require('fs');
-var cronJob = require('cron').CronJob;
-
-var options = {
-    host: 'opendata.cwb.gov.tw',
-    path: '/opendata/MFC/F-C0032-001.xml'
-};
-
-callback = function(response) {
-    var xml = '';
-
-    //another chunk of data has been recieved, so append it to `xml`
-    response.on('data', function(chunk) {
-        xml += chunk;
-    });
-
-    //the whole response has been recieved, so we just print it out here
-    response.on('end', function() {
-        parser.parseString(xml, function(err, result) {
-            fs.writeFile(path.join(__dirname, 'public') + "/playground/weather/data.json", JSON.stringify(result), function(err) {
-                if (err) {
-                    console.log(err);
-                }
-            });
-        });
-    });
-}
-
-new cronJob({
-    cronTime: '5 * * * * *',
-    onTick: function() {
-        http.request(options, callback).end();
-    },
-    start: true
-});
+module.exports = app;

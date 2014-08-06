@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "start": "node app.js"
+    "start": "node run.js"
   },
   "dependencies": {
     "body-parser": ">=1.5.0",
@@ -19,6 +19,7 @@
     "morgan": "1.0.1",
     "simple-oauth2": ">=0.1.9",
     "stylus": ">=0.47.3",
-    "xml2js": "~0.4.4"
+    "xml2js": "~0.4.4",
+    "vhost": "~2.0.0"
   }
 }
