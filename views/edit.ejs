@@ -88,7 +88,7 @@
                     $($(context).find("hr").eq(0).prevAll().get().reverse()).each(function(idx, item){
                         intro += item.outerHTML+"\n";
                     });
-                    $("#intro").val(intro + "<a href='/article/<%= article.id %>'><%= lang.readmore %></a>");
+                    $("#intro").val(intro + "<a href='/article/<%= article._id %>'><%= lang.readmore %></a>");
                 } else {
                     $("#intro").val(context.html());
                 }
