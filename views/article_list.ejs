@@ -18,48 +18,50 @@
   <body>
   	   <% include common/nav.ejs %>
       <div class='container'>
-        <div class='col-lg-9'>
-         <% for(o in articles) { var article = articles[o];%>
-            <article>
-                <header class='clearfix'>
-                  <h2><a href='/article/<%= article._id %>'><%= article.title%></a></h2>
-                  <div class='desc'>
-                    <span title="<%= lang.author %>: <%= lang.ShinyChang %>">
-                      <i class="fa fa-user"></i> <a href="https://plus.google.com/+ZhiHongChang/?rel=author"><%= lang.ShinyChang %></a>
-                    </span>
-                    <span title="<%= lang.createTime %>: <%= lib.dateString(article.createTime)%>">
-                      <i class="fa fa-calendar"></i> <%= lib.dateString(article.createTime) %>
-                    </span>
+        <div class='row'>
+          <div class='col-lg-9'>
+           <% for(o in articles) { var article = articles[o];%>
+              <article>
+                  <header class='clearfix'>
+                    <h2><a href='/article/<%= article._id %>'><%= article.title%></a></h2>
+                    <div class='desc'>
+                      <span title="<%= lang.author %>: <%= lang.ShinyChang %>">
+                        <i class="fa fa-user"></i> <a href="https://plus.google.com/+ZhiHongChang/?rel=author"><%= lang.ShinyChang %></a>
+                      </span>
+                      <span title="<%= lang.createTime %>: <%= lib.dateString(article.createTime)%>">
+                        <i class="fa fa-calendar"></i> <%= lib.dateString(article.createTime) %>
+                      </span>
+                    </div>
+                    <% include common/tag.ejs %>
+                  </header>
+                  <div>
+                       <%- article.intro || article.context%>
                   </div>
-                  <% include common/tag.ejs %>
-                </header>
-                <div>
-                     <%- article.intro || article.context%>
-                </div>
-            </article>
-         <% } %>
-        </div>
-        <div class='col-lg-3'>
-          <div class="panel panel-default">
-            <div class="panel-heading"><%= lang.tagList %></div>
-            <div class="panel-body">
-              <ul class='tag-box clearfix'>
-                <% for(o in tagList) { var tag = tagList[o];%>
-                  <li><a href="/article/tag/<%= tag %>"><%= tag %></a></li>
-                <% }%>
-              </ul>
+              </article>
+           <% } %>
+          </div>
+          <div class='col-lg-3'>
+            <div class="panel panel-default">
+              <div class="panel-heading"><%= lang.tagList %></div>
+              <div class="panel-body">
+                <ul class='tag-box clearfix'>
+                  <% for(o in tagList) { var tag = tagList[o];%>
+                    <li><a href="/article/tag/<%= tag %>"><%= tag %></a></li>
+                  <% }%>
+                </ul>
+              </div>
             </div>
           </div>
-        </div>
-        <div class='col-xs-12'>
-          <ul class="pager">
-            <% if (prev > 0) { %>
-            <li class="previous"><a href="/article/list?page=<%= prev %>">&larr; <%= lang.newerArticle %></a></li>
-            <% } %>
-            <% if (next > 0) { %>
-            <li class="next"><a href="/article/list?page=<%= next %>"><%= lang.olderArticle %> &rarr;</a></li>
-            <% } %>
-          </ul>
+          <div class='col-xs-12'>
+            <ul class="pager">
+              <% if (prev > 0) { %>
+              <li class="previous"><a href="/article/list?page=<%= prev %>">&larr; <%= lang.newerArticle %></a></li>
+              <% } %>
+              <% if (next > 0) { %>
+              <li class="next"><a href="/article/list?page=<%= next %>"><%= lang.olderArticle %> &rarr;</a></li>
+              <% } %>
+            </ul>
+          </div>
         </div>
     </div>
     <% include common/footer.ejs %>
