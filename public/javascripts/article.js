@@ -1,4 +1,5 @@
-var linkwithin_site_id = 2231675;
+var linkwithin_site_id = 2231675,
+    linkwithin_text = "你可能感興趣…";
 
 // disqus
 /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
