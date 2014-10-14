@@ -1,3 +1,5 @@
+var linkwithin_site_id = 2231675;
+
 // disqus
 /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
 var disqus_shortname = 'shinychang'; // required: replace example with your forum shortname
