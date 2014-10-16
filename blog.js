@@ -111,6 +111,7 @@ app.get('/', index.index);
 app.get('/about', user.about);
 app.get('/sitemap.xml', index.sitemap);
 app.get('/rss', index.rss);
+app.get('/feed', index.feed);
 app.get('/logout', index.logout);
 
 // login

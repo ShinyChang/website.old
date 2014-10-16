@@ -24,6 +24,16 @@ exports.sitemap = function(req, res) {
     });
 }
 
+exports.feed = function(req, res) {
+    var articleProvider = req.articleProvider;
+    articleProvider.findAll(-1, function(error, article) {
+        res.header('Content-Type', 'application/xml');
+        res.render('rss', {
+            articles: article
+        });
+    });
+}
+
 exports.rss = function(req, res) {
     var articleProvider = req.articleProvider;
     articleProvider.findPage(1, function(error, article) {
