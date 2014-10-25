@@ -2,7 +2,6 @@
     <i class="fa fa-circle fa-stack-2x"></i>
     <i class="fa fa-angle-up fa-stack-1x fa-inverse" title='<%= lang.backToTop %>'></i>
 </span>
-<div id='fb-root'></div>
 <footer>
     <div class='container'>
         © 2014 Shiny All rights reserved.
@@ -13,8 +12,115 @@
         </div>
     </div>
 </footer>
-<script src="/javascripts/jquery.min.js"></script>
-<script src="/javascripts/bootstrap.min.js"></script>
-<script src="/javascripts/jquery.fancybox.pack.js"></script>
-<script src="/javascripts/jquery.fancybox-buttons.js"></script>
-<script src="/javascripts/main.js"></script>
+<script data-no-instant src="/javascripts/jquery.min.js"></script>
+<script data-no-instant src="/javascripts/bootstrap.min.js"></script>
+<!-- <script data-no-instant src="/javascripts/jquery.fancybox.pack.js"></script> -->
+<!-- <script data-no-instant src="/javascripts/jquery.fancybox-buttons.js"></script> -->
+<script data-no-instant src="/javascripts/google-code-prettify/prettify.js"></script>
+<script data-no-instant type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-513fcf7b19dae453" async='async'></script>
+<script data-no-instant src="/javascripts/main.js"></script>
+<script>
+
+
+</script>
+<script data-no-instant src="/javascripts/instantclick.js"></script>
+<script data-no-instant>
+InstantClick.on('change', function(isInitialLoad) {
+    if (typeof ga !== 'undefined') {
+        ga('send', 'pageview', location.pathname + location.search);
+    }
+
+    if (!isInitialLoad) {
+        // rerender addthis widget
+        var script = 'http://s7.addthis.com/js/250/addthis_widget.js#domready=1';
+        if (window.addthis) {
+            window.addthis = null;
+            window._adr = null;
+            window._atc = null;
+            window._atd = null;
+            window._ate = null;
+            window._atr = null;
+            window._atw = null;
+        }
+        $.getScript(script);
+
+        // update Disqus thread
+        if ($("#disqus_thread").length) {
+            if (typeof DISQUS === 'undefined') {
+                $.getScript("//shinychang.disqus.com/embed.js");
+            } else {
+                DISQUS.reset({
+                  reload: true,
+                  config: function () {
+                    this.page.identifier = window.location.pathname;
+                    this.page.url = window.location.toString();
+                  }
+                });
+            }
+        }
+
+    }
+
+    // fancybox
+    $(".fancybox").prop('target', '_blank');
+    // $(".fancybox").fancybox({
+    //     openEffect  : 'none',
+    //     closeEffect : 'none',
+    //     closeBtn: false,
+    //     closeClick:true,
+    //     helpers: {
+    //         buttons:{
+    //             tpl: '<div id="fancybox-buttons"><ul style="width:75px"><li><a class="btnToggle" title="Toggle size" href="javascript:;"></a></li><li><a class="btnClose" title="Close" href="javascript:;"></a></li></ul></div>'
+    //         }
+    //     }
+    // });
+
+    var t = null;
+    $(window).bind('scroll', function() {
+        clearTimeout(t);
+        t = setTimeout(function() {
+            $("body").toggleClass("scroll", $("body").scrollTop() > 0);
+        }, 100);
+    });
+
+
+
+    // Get the click event
+    $("#backtotop").bind("click", function() {
+        // Set the body top margin
+        $("body").css({
+            "margin-top": -$(window).scrollTop() + "px",
+            "overflow-y": "scroll", // This property is posed for fix the blink of the window width change
+        });
+
+        // Make the scroll handle on the position 0
+        $(window).scrollTop(0);
+
+        // Add the transition property to the body element
+        $("body").css("transition", "all 1s cubic-bezier(0.175, 0.885, 0.320, 1.275)");
+
+        // Apply the scroll effects
+        $("body").css("margin-top", "0");
+
+        // Wait until the transition end
+        $("body").on("webkitTransitionEnd transitionend msTransitionEnd oTransitionEnd", function() {
+            // Remove the transition property
+            $("body").css("transition", "none");
+        });
+    });
+
+
+    // blank link if link is out of website
+    $("a[href]").each(function(idx, item) {
+        var href = $(this).attr('href');
+        if (/^((https?:)?\/\/(www\.)?(shinychang.net)|\/)/i.test(href) === false) {
+            $(this).attr("target", "_blank");
+        }
+    });
+
+    // pretty print
+    prettyPrint();
+});
+
+InstantClick.init();
+</script>

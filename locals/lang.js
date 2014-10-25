@@ -16,7 +16,7 @@ exports.lang = {
     signIn: '登入',
     about: '關於',
     article: '文章',
-    archive: '封存',
+    archive: '所有文章',
     logout: '登出',
     backToTop: '回到最上面',
     tagList: '標籤列表',
