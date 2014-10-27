@@ -149,6 +149,7 @@ app.use(function(req, res, next) {
     res.render('not_found', {
         session: req.session,
         title: "Page Not Found",
+        keywords: lang.siteName,
         description: "Page not found.",
         path: '/article'
     });

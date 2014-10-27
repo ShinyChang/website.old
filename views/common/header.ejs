@@ -2,11 +2,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="author" content="Shiny">
-<title><%= title %></title>
+<title><%= lib.siteName(title) %></title>
 <meta name='description' content="<%= description %>"></meta>
-<meta name="keywords" content="<%= keywords %>">
+<meta name="keywords" content="<%= keywords %>"></meta>
+<link rel="alternate" type="application/rss+xml" title="RSS" href="/rss" />
 <link rel='stylesheet' href='/stylesheets/bootstrap.min.css' />
 <link rel='stylesheet' href='/stylesheets/font-awesome.min.css' />
-<link rel='stylesheet' href='/stylesheets/FanceBox/jquery.fancybox.css' />
+<link rel='stylesheet' href='/stylesheets/FancyBox/jquery.fancybox.css' />
+<link rel='stylesheet' href='/stylesheets/FancyBox/helpers/jquery.fancybox-buttons.css' />
 <link rel="stylesheet" href="/stylesheets/prettify.css" />
 <link rel='stylesheet' href='/stylesheets/style.css' />

@@ -30,6 +30,7 @@ exports.list = function(req, res) {
                     title: lang.articleList,
                     session: req.session,
                     description: desc,
+                    keywords: lang.siteName,
                     path: '/article',
                     articles: article,
                     next: next,
@@ -56,6 +57,7 @@ exports.tag = function(req, res) {
                         session: req.session,
                         title: "標籤：" + 　req.params.tag + "沒有找到任何文章",
                         description: "標籤：" + 　req.params.tag + "沒有找到任何文章",
+                        keywords: lang.siteName,
                         path: '/article'
                     });
                     return;
@@ -63,6 +65,7 @@ exports.tag = function(req, res) {
                 res.render('article_list', {
                     title: "標籤：" + 　req.params.tag,
                     session: req.session,
+                    keywords: lang.siteName,
                     description: desc,
                     path: '/article',
                     articles: article,
@@ -103,6 +106,8 @@ exports.edit = function(req, res) {
             res.render('edit', {
                 title: article.title,
                 session: req.session,
+                description: '',
+                keywords: lang.siteName,
                 path: '/article',
                 article: article,
                 files: files
@@ -131,6 +136,7 @@ exports.show = function(req, res) {
         if (!article) {
             res.render('not_found', {
                 session: req.session,
+                keywords: lang.siteName,
                 title: lang.articleNotFound,
                 description: "文章編號：" + 　req.params.id + "不存在",
                 path: '/article'
@@ -142,6 +148,7 @@ exports.show = function(req, res) {
                 res.render('article', {
                     title: article.title,
                     session: req.session,
+                    keywords: article.tag.join(","),
                     description: article.context.replace(/(<([^>]+)>)/ig, ""),
                     path: '/article',
                     article: article,
@@ -176,6 +183,7 @@ exports.archive = function(req, res) {
             title: lang.articleList,
             session: req.session,
             description: desc,
+            keywords: lang.siteName,
             path: '/article/archive',
             list: list
         });

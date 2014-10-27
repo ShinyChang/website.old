@@ -11,7 +11,7 @@ exports.about = function(req, res) {
         title: lang.about,
         session: req.session,
         description: "",
-        keywords:"",
+        keywords: lang.siteName,
         path: req.path,
         experiences: [
         	{location: "台灣數位學習科技股份有限公司", url:"http://tw.formosasoft.com/", job: "工程師", startDate: "2012-09", endDate: ""},
