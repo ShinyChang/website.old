@@ -17,7 +17,8 @@
 <!-- <script data-no-instant src="/javascripts/jquery.fancybox.pack.js"></script> -->
 <!-- <script data-no-instant src="/javascripts/jquery.fancybox-buttons.js"></script> -->
 <script data-no-instant src="/javascripts/google-code-prettify/prettify.js"></script>
-<script data-no-instant type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-513fcf7b19dae453" async='async'></script>
+<script data-no-instant type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-513fcf7b19dae453" ></script>
+<script data-no-instant async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 <script data-no-instant src="/javascripts/main.js"></script>
 <script>
 
@@ -26,11 +27,17 @@
 <script data-no-instant src="/javascripts/instantclick.js"></script>
 <script data-no-instant>
 InstantClick.on('change', function(isInitialLoad) {
+    // init ad
+    if ($(".adsbygoogle").length) {
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    }
     if (typeof ga !== 'undefined') {
         ga('send', 'pageview', location.pathname + location.search);
     }
 
     if (!isInitialLoad) {
+
+
         // rerender addthis widget
         var script = 'http://s7.addthis.com/js/250/addthis_widget.js#domready=1';
         if (window.addthis) {

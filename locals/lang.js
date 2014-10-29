@@ -23,5 +23,6 @@ exports.lang = {
     recentArticle: '最新文章',
     playground: '遊樂園',
     portfolio: '作品集',
-    readmore: '閱讀更多...'
+    readmore: '閱讀更多...',
+    ad: '工商服務',
 }
