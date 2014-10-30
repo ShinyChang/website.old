@@ -2,6 +2,10 @@ body {
   font-family: 'Yanone Kaffeesatz', "Microsoft JhengHei", sans-serif;
 }
 /* global */
+/* Google AD */
+.adsbygoogle {
+  margin-bottom: 15px;
+}
 a {
   cursor: pointer;
 }
