@@ -138,6 +138,11 @@ app.get('/weather', function(req, res) {
     res.render('playground/weather');
 });
 
+// embeddable
+app.get('/embeddable', function(req, res) {
+    res.render('playground/embeddable');
+});
+
 // server error
 app.use(function(err, req, res, next) {
     console.error(err.stack);

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script src="http://code.jquery.com/jquery.min.js"></script>
+    <link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+    <meta charset="utf-8">
+    <title>Url IFrame Embeddable Checker</title>
+    <style>
+    iframe {
+        border: 0;
+        width: 100%;
+        height: 450px;
+        transition: .5s;
+    }
+    </style>
+</head>
+
+<body>
+    <div class='container-fluid'>
+        <div class='row'>
+            <div class='col-xs-12'>
+                <div class="page-header">
+                    <h1>Check the url is iframe embeddable
+                        <small>Try it now</small>
+                    </h1>
+                </div>
+                <div class="input-group">
+                    <input id="url" type="text" class="form-control" value="http://shinychang.net">
+                    <span class="input-group-btn">
+                        <button class="btn btn-default" type="button" id='checker'>Check</button>
+                    </span>
+                </div>
+                <iframe id="iframe"></iframe>
+            </div>
+        </div>
+
+    </div>
+    <script>
+    (function() {
+        "use strict";
+        var checker = document.querySelector("#checker"),
+            iframe = document.querySelector('#iframe'),
+            url = document.querySelector('#url');
+        iframe.addEventListener('load', function() {
+            if (this.getAttribute('data-reset') === '1') {
+                this.contentDocument.write("Can't Be embedded");
+                this.setAttribute('data-reset', 0);
+                this.setAttribute('src', this.getAttribute('data-url'));
+                this.style.opacity = 0;
+                this.style.display = 'block';
+            } else {
+                this.style.opacity = 1;
+                checker.innerHTML = 'Check';
+            }
+        });
+
+        url.addEventListener('keyup', function(e) {
+            if (e.keyCode === 13) {
+                checker.dispatchEvent(new Event('click'));
+            }
+        });
+
+        checker.addEventListener('click', function() {
+            iframe.style.display = 'none';
+            iframe.setAttribute('data-reset', '1');
+            iframe.setAttribute('data-url', url.value);
+            iframe.setAttribute('src', 'about:blank');
+            this.innerHTML = 'Loading...';
+        }, false);
+    })();
+    </script>
+</body>
+
+</html>
+
+
