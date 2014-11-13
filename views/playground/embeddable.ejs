@@ -6,36 +6,32 @@
     <link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
     <meta charset="utf-8">
-    <title>Url IFrame Embeddable Checker</title>
+    <title>IFrame embeddable checker</title>
+    <meta name='description' content="Check the iframe is embeddable or not?">
     <style>
     iframe {
-        border: 0;
-        width: 100%;
-        height: 450px;
-        transition: .5s;
+        transition: opacity .5s ease;
     }
     </style>
 </head>
 
 <body>
-    <div class='container-fluid'>
+    <div class='container'>
         <div class='row'>
             <div class='col-xs-12'>
                 <div class="page-header">
-                    <h1>Check the url is iframe embeddable
-                        <small>Try it now</small>
-                    </h1>
+                    <h1>IFrame embeddable checker</h1>
                 </div>
                 <div class="input-group">
-                    <span class="input-group-addon js-protocol">
-                        http://
-                    </span>
+                    <span class="input-group-addon js-protocol">http://</span>
                     <input id="url" type="text" class="form-control" placeholder="example.com">
                     <span class="input-group-btn">
                         <button class="btn btn-default" type="button" id='checker'>Check</button>
                     </span>
                 </div>
-                <iframe id="iframe"></iframe>
+                <div class="embed-responsive embed-responsive-16by9">
+                    <iframe id="iframe" class="embed-responsive-item"></iframe>
+                </div>
             </div>
         </div>
 
@@ -47,11 +43,12 @@
             iframe = document.querySelector('#iframe'),
             url = document.querySelector('#url'),
             protocol = document.querySelector(".js-protocol");
+
         iframe.addEventListener('load', function() {
             if (this.getAttribute('data-reset') === '1') {
-                this.contentDocument.write("Can't Be embedded");
-                this.setAttribute('data-reset', 0);
-                this.setAttribute('src', this.getAttribute('data-url'));
+                this.contentDocument.write("Can't be embedded");
+                this.removeAttribute('data-reset');
+                this.src = this.getAttribute('data-url');
                 this.style.opacity = 0;
                 this.style.display = 'block';
             } else {
@@ -82,6 +79,7 @@
 
             url.value = href;
             protocol.innerText = ptc;
+
             ptc = href = test = null;
         });
 
@@ -89,11 +87,21 @@
             iframe.style.display = 'none';
             iframe.setAttribute('data-reset', '1');
             iframe.setAttribute('data-url', protocol.innerText + url.value);
-            iframe.setAttribute('src', 'about:blank');
-            this.innerHTML = 'Loading...';
+            iframe.src = 'about:blank';
+            this.innerHTML = 'Checking...';
         }, false);
     })();
     </script>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-27224084-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
 </body>
 
 </html>
