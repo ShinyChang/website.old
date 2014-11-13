@@ -27,7 +27,10 @@
                     </h1>
                 </div>
                 <div class="input-group">
-                    <input id="url" type="text" class="form-control" value="http://shinychang.net">
+                    <span class="input-group-addon js-protocol">
+                        http://
+                    </span>
+                    <input id="url" type="text" class="form-control" placeholder="example.com">
                     <span class="input-group-btn">
                         <button class="btn btn-default" type="button" id='checker'>Check</button>
                     </span>
@@ -42,7 +45,8 @@
         "use strict";
         var checker = document.querySelector("#checker"),
             iframe = document.querySelector('#iframe'),
-            url = document.querySelector('#url');
+            url = document.querySelector('#url'),
+            protocol = document.querySelector(".js-protocol");
         iframe.addEventListener('load', function() {
             if (this.getAttribute('data-reset') === '1') {
                 this.contentDocument.write("Can't Be embedded");
@@ -62,10 +66,29 @@
             }
         });
 
+        url.addEventListener('input', function(e){
+            var ptc = protocol.innerText,
+                href,
+                test = /^((https?|ftp|file):)?\/\//i.exec(url.value);
+            if (!test) {
+                return;
+            }
+            ptc = test && test[0] || ptc;
+            if (test && test[0]) {
+                href = url.value.replace(test[0], '');
+            } else {
+                href = url.value;
+            }
+
+            url.value = href;
+            protocol.innerText = ptc;
+            ptc = href = test = null;
+        });
+
         checker.addEventListener('click', function() {
             iframe.style.display = 'none';
             iframe.setAttribute('data-reset', '1');
-            iframe.setAttribute('data-url', url.value);
+            iframe.setAttribute('data-url', protocol.innerText + url.value);
             iframe.setAttribute('src', 'about:blank');
             this.innerHTML = 'Loading...';
         }, false);
