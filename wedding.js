@@ -23,7 +23,7 @@ app.get('/comments.json', function(req, res) {
 });
 
 app.post('/comments.json', function(req, res) {
-    var data = res.body;
+    var data = req.body;
     data.timestamp = Date.now();
     comments.push(data);
     // fs.writeFile('_comments.json', JSON.stringify(comments));
