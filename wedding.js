@@ -28,7 +28,7 @@ app.post('/comments.json', function(req, res) {
     var data = req.body;
     data.timestamp = Date.now();
     comments.push(data);
-    // fs.writeFile('_comments.json', JSON.stringify(comments));
+    fs.writeFile('_comments.json', JSON.stringify(comments));
     res.setHeader('Content-Type', 'application/json');
     res.send(JSON.stringify(comments));
 });
