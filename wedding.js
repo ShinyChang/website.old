@@ -55,7 +55,7 @@ app.get('/reward', function(req, res) {
         rewardList[randomIndex] = rewardList[i];
         rewardList[i] = itemAtIndex;
     }
-    rewardList = rewardList.slice(0, 5);
+    // rewardList = rewardList.slice(0, 5);
     res.setHeader('Content-Type', 'application/json');
     res.send(JSON.stringify(rewardList));
 });
