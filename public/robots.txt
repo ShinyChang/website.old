@@ -1,3 +1,3 @@
 User-agent: *
-Sitemap: http://shinychang.net/sitemap.xml
+Sitemap: https://shinychang.net/sitemap.xml
 Disallow: /cdn-cgi/

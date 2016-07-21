@@ -3,13 +3,13 @@
     <channel>
         <title>Shiny</title>
         <description>Shiny Chang's personal blog</description>
-        <link>http://shinychang.net/</link>
+        <link>https://shinychang.net/</link>
         <lastBuildDate><%= Date() %></lastBuildDate>
         <managingEditor>ublue724@gmail.com (Shiny Chang)</managingEditor>
         <% for (var idx in articles) { %>
         <item>
             <title><%= articles[idx].title%></title>
-            <link>http://shinychang.net/article/<%= articles[idx].id%></link>
+            <link>https://shinychang.net/article/<%= articles[idx].id%></link>
             <guid isPermaLink="false"><%= articles[idx].id%></guid>
             <pubDate><%= articles[idx].createTime%></pubDate>
             <description>

@@ -94,7 +94,7 @@ if ('development' === config.env) {
 // global controller
 app.all('/*', function(req, res, next) {
     if (req.headers.host.match(/^www/) !== null) {
-        res.redirect('http://' + req.headers.host.replace(/^www\./, '') + req.url);
+        res.redirect('https://' + req.headers.host.replace(/^www\./, '') + req.url);
         return;
     }
     res.locals.csrf = req.session ? req.csrfToken() : ""; // CSRF

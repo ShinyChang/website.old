@@ -5,30 +5,30 @@
   xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
         http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
 <url>
-    <loc>http://shinychang.net/</loc>
+    <loc>https://shinychang.net/</loc>
     <changefreq>hourly</changefreq>
 </url>
 <url>
-    <loc>http://shinychang.net/about</loc>
+    <loc>https://shinychang.net/about</loc>
     <changefreq>hourly</changefreq>
 </url>
 <url>
-    <loc>http://shinychang.net/article/list</loc>
+    <loc>https://shinychang.net/article/list</loc>
     <changefreq>hourly</changefreq>
 </url>
 <url>
-    <loc>http://shinychang.net/article/archive</loc>
+    <loc>https://shinychang.net/article/archive</loc>
     <changefreq>hourly</changefreq>
 </url>
 <% for (var i = 1; i <= page; i++) { %>
 <url>
-    <loc>http://shinychang.net/article/list?page=<%= i %></loc>
+    <loc>https://shinychang.net/article/list?page=<%= i %></loc>
     <changefreq>hourly</changefreq>
 </url>
 <% } %>
 <% for (var o in articles) { %>
     <url>
-        <loc>http://shinychang.net/article/<%= articles[o].id %></loc>
+        <loc>https://shinychang.net/article/<%= articles[o].id %></loc>
         <changefreq>hourly</changefreq>
     </url>
 <% } %>

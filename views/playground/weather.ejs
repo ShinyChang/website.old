@@ -7,7 +7,7 @@
     <meta name="author" content="Shiny">
     <title>天氣</title>
     <meta name='description' content="最近12小時的天氣"></meta>
-    <link href='http://fonts.googleapis.com/css?family=Josefin+Sans' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Josefin+Sans' rel='stylesheet' type='text/css'>
     <style>
         body {
             background: #555;
@@ -75,7 +75,7 @@
   </head>
   <body>
     <footer>
-        資料來源：<a href='http://opendata.cwb.gov.tw/‎'>開放資料平臺: 交通部中央氣象局</a>
+        資料來源：<a href='//opendata.cwb.gov.tw/‎'>開放資料平臺: 交通部中央氣象局</a>
     </footer>
     <!-- Google Analytics -->
     <script>
@@ -85,7 +85,7 @@
     (function() {
     var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
 
-    ga.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'stats.g.doubleclick.net/dc.js';
+    ga.src = ('https:' == document.location.protocol ? 'https://' : '//') + 'stats.g.doubleclick.net/dc.js';
 
     var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
@@ -98,8 +98,8 @@
         var timeRange = [];
 
         // get the weather infomation from open data
-        // original source(xml format): (http://opendata.cwb.gov.tw/opendata/MFC/F-C0032-001.xml)
-        // local cache(json format): http://shinychang.net/playground/weather/data.json
+        // original source(xml format): (//opendata.cwb.gov.tw/opendata/MFC/F-C0032-001.xml)
+        // local cache(json format): //shinychang.net/playground/weather/data.json
         $.get("/playground/weather/data.json", function(data) {
             var cities = data.fifowml.data[0].location;
 
@@ -157,7 +157,7 @@
             $("body").prepend(template({data: weatherData }) );
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(function (geo){
-                    $.get("http://maps.googleapis.com/maps/api/geocode/json?latlng=" + geo.coords.latitude + "," + geo.coords.longitude + "&sensor=true", function(o){
+                    $.get("//maps.googleapis.com/maps/api/geocode/json?latlng=" + geo.coords.latitude + "," + geo.coords.longitude + "&sensor=true", function(o){
                         $("[data-name='"+o['results'][4]['address_components'][0]['short_name']+"']").prependTo($("body")).addClass("current");
                     }, 'json');
                 }, error);
